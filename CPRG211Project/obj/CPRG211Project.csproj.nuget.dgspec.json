@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\CPRG211Project.csproj": {}
+    "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\CPRG211Project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\CPRG211Project.csproj": {
+    "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\CPRG211Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\CPRG211Project.csproj",
+        "projectUniqueName": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\CPRG211Project.csproj",
         "projectName": "CPRG211Project",
-        "projectPath": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\CPRG211Project.csproj",
+        "projectPath": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\CPRG211Project.csproj",
         "packagesPath": "C:\\Users\\papho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\obj\\",
+        "outputPath": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [

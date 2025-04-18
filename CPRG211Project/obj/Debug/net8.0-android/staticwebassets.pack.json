@@ -1,27 +1,27 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\CPRG211Project.styles.css",
+      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\CPRG211Project.styles.css",
       "PackagePath": "staticwebassets\\CPRG211Project.styles.css"
     },
     {
-      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\wwwroot\\css\\app.css",
+      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\wwwroot\\css\\app.css",
       "PackagePath": "staticwebassets\\css\\app.css"
     },
     {
-      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
-      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\CPRG211F\\CPRG211Project\\wwwroot\\index.html",
+      "Id": "C:\\Users\\papho\\OneDrive\\Documents\\GitHub\\cprg211_project\\CPRG211Project\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
