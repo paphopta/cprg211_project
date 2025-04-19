@@ -30,25 +30,25 @@
     <AppXManifest Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-04-18T18:59:58.521</Modified>
+      <Modified>2025-04-19T06:24:49.752</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2025-04-18T18:59:58.386</Modified>
+      <Modified>2025-04-19T05:42:31.550</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\CPRG211Project.runtimeconfig.json">
       <PackagePath>CPRG211Project.runtimeconfig.json</PackagePath>
-      <Modified>2025-04-18T18:59:58.230</Modified>
+      <Modified>2025-04-19T05:42:31.322</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\CPRG211Project.dll">
       <PackagePath>CPRG211Project.dll</PackagePath>
-      <Modified>2025-04-18T18:59:57.595</Modified>
+      <Modified>2025-04-19T06:24:49.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>CPRG211Project.exe</PackagePath>
-      <Modified>2025-04-18T18:59:57.606</Modified>
+      <Modified>2025-04-19T06:24:49.580</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -76,235 +76,235 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:56.363</Modified>
+      <Modified>2025-04-19T05:42:29.460</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
       <PackagePath>splashSplashScreen.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:56.373</Modified>
+      <Modified>2025-04-19T05:42:29.472</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
       <PackagePath>splashSplashScreen.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:56.406</Modified>
+      <Modified>2025-04-19T05:42:29.487</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
       <PackagePath>splashSplashScreen.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:56.426</Modified>
+      <Modified>2025-04-19T05:42:29.508</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:56.510</Modified>
+      <Modified>2025-04-19T05:42:29.590</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf">
       <PackagePath>OpenSans-Regular.ttf</PackagePath>
       <Modified>2025-04-18T18:57:44.574</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
-      <PackagePath>appiconLargeTile.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.043</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
-      <PackagePath>appiconLargeTile.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.043</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
-      <PackagePath>appiconLargeTile.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.044</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
-      <PackagePath>appiconLargeTile.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.044</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
+      <PackagePath>appicon.ico</PackagePath>
+      <Modified>2025-04-19T05:42:30.172</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-100.png">
       <PackagePath>appiconLargeTile.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.044</Modified>
+      <Modified>2025-04-19T05:42:30.166</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
-      <PackagePath>appiconWideTile.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.044</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
+      <PackagePath>appiconLargeTile.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.166</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
-      <PackagePath>appiconWideTile.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.044</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
+      <PackagePath>appiconLargeTile.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.166</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
-      <PackagePath>appiconWideTile.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.044</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
+      <PackagePath>appiconLargeTile.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.165</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
-      <PackagePath>appiconWideTile.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.045</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
-      <PackagePath>appiconWideTile.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.045</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
-      <PackagePath>appiconMediumTile.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.045</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
-      <PackagePath>appiconMediumTile.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.045</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
-      <PackagePath>appiconMediumTile.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.045</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
-      <PackagePath>appiconMediumTile.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.045</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
-      <PackagePath>appiconMediumTile.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
-      <PackagePath>appiconSmallTile.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
-      <PackagePath>appiconSmallTile.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
-      <PackagePath>appiconSmallTile.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
-      <PackagePath>appiconSmallTile.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
-      <PackagePath>appiconSmallTile.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
-      <PackagePath>appiconStoreLogo.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
-      <PackagePath>appiconStoreLogo.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
-      <PackagePath>appiconStoreLogo.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.046</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
-      <PackagePath>appiconStoreLogo.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
-      <PackagePath>appiconStoreLogo.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
-      <PackagePath>appiconLogo.altform-lightunplated_targetsize-256.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
-      <PackagePath>appiconLogo.altform-lightunplated_targetsize-48.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
-      <PackagePath>appiconLogo.altform-lightunplated_targetsize-32.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
-      <PackagePath>appiconLogo.altform-lightunplated_targetsize-24.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
+      <PackagePath>appiconLargeTile.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.165</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-16.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.047</Modified>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
-      <PackagePath>appiconLogo.altform-unplated_targetsize-256.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
+      <PackagePath>appiconLogo.altform-lightunplated_targetsize-24.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
-      <PackagePath>appiconLogo.altform-unplated_targetsize-48.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
+      <PackagePath>appiconLogo.altform-lightunplated_targetsize-256.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
-      <PackagePath>appiconLogo.altform-unplated_targetsize-32.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
+      <PackagePath>appiconLogo.altform-lightunplated_targetsize-32.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
-      <PackagePath>appiconLogo.altform-unplated_targetsize-24.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
+      <PackagePath>appiconLogo.altform-lightunplated_targetsize-48.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-16.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+      <Modified>2025-04-19T05:42:30.170</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
-      <PackagePath>appiconLogo.targetsize-256.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
+      <PackagePath>appiconLogo.altform-unplated_targetsize-24.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.170</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
-      <PackagePath>appiconLogo.targetsize-48.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
+      <PackagePath>appiconLogo.altform-unplated_targetsize-256.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
-      <PackagePath>appiconLogo.targetsize-32.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.048</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
+      <PackagePath>appiconLogo.altform-unplated_targetsize-32.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.170</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
-      <PackagePath>appiconLogo.targetsize-24.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
-      <PackagePath>appiconLogo.targetsize-16.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
-      <PackagePath>appiconLogo.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
-      <PackagePath>appiconLogo.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
-      <PackagePath>appiconLogo.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
-      <PackagePath>appiconLogo.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
+      <PackagePath>appiconLogo.altform-unplated_targetsize-48.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-100.png">
       <PackagePath>appiconLogo.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
+      <Modified>2025-04-19T05:42:30.172</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
-      <PackagePath>appicon.ico</PackagePath>
-      <Modified>2025-04-18T18:59:57.049</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
+      <PackagePath>appiconLogo.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
-      <PackagePath>dotnet_bot.scale-400.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.050</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
+      <PackagePath>appiconLogo.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
-      <PackagePath>dotnet_bot.scale-200.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.050</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
+      <PackagePath>appiconLogo.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
-      <PackagePath>dotnet_bot.scale-150.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.050</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
+      <PackagePath>appiconLogo.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
-      <PackagePath>dotnet_bot.scale-125.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.050</Modified>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
+      <PackagePath>appiconLogo.targetsize-16.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
+      <PackagePath>appiconLogo.targetsize-24.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
+      <PackagePath>appiconLogo.targetsize-256.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.170</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
+      <PackagePath>appiconLogo.targetsize-32.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.171</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
+      <PackagePath>appiconLogo.targetsize-48.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.170</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
+      <PackagePath>appiconMediumTile.scale-100.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.167</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
+      <PackagePath>appiconMediumTile.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.167</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
+      <PackagePath>appiconMediumTile.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.167</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
+      <PackagePath>appiconMediumTile.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.167</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
+      <PackagePath>appiconMediumTile.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.167</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
+      <PackagePath>appiconSmallTile.scale-100.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
+      <PackagePath>appiconSmallTile.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
+      <PackagePath>appiconSmallTile.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
+      <PackagePath>appiconSmallTile.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
+      <PackagePath>appiconSmallTile.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
+      <PackagePath>appiconStoreLogo.scale-100.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
+      <PackagePath>appiconStoreLogo.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.169</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
+      <PackagePath>appiconStoreLogo.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
+      <PackagePath>appiconStoreLogo.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
+      <PackagePath>appiconStoreLogo.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.168</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
+      <PackagePath>appiconWideTile.scale-100.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.167</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
+      <PackagePath>appiconWideTile.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.166</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
+      <PackagePath>appiconWideTile.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.166</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
+      <PackagePath>appiconWideTile.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.166</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
+      <PackagePath>appiconWideTile.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
       <PackagePath>dotnet_bot.scale-100.png</PackagePath>
-      <Modified>2025-04-18T18:59:57.050</Modified>
+      <Modified>2025-04-19T05:42:30.172</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
+      <PackagePath>dotnet_bot.scale-125.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.172</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
+      <PackagePath>dotnet_bot.scale-150.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.172</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
+      <PackagePath>dotnet_bot.scale-200.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.172</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
+      <PackagePath>dotnet_bot.scale-400.png</PackagePath>
+      <Modified>2025-04-19T05:42:30.172</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\CPRG211Project.deps.json">
       <PackagePath>CPRG211Project.deps.json</PackagePath>
-      <Modified>2025-04-18T18:59:58.114</Modified>
+      <Modified>2025-04-19T05:42:31.205</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.57\lib\net8.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>
@@ -664,7 +664,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\staticwebassets.build.endpoints.json">
       <PackagePath>CPRG211Project.staticwebassets.endpoints.json</PackagePath>
-      <Modified>2025-04-18T18:59:51.850</Modified>
+      <Modified>2025-04-19T05:42:21.514</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\.nuget\packages\microsoft.maui.controls.compatibility\8.0.100\lib\net8.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>
@@ -680,11 +680,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\scopedcss\bundle\CPRG211Project.styles.css">
       <PackagePath>wwwroot\CPRG211Project.styles.css</PackagePath>
-      <Modified>2025-04-18T18:59:51.790</Modified>
+      <Modified>2025-04-19T05:42:21.454</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\scopedcss\projectbundle\CPRG211Project.bundle.scp.css">
       <PackagePath>wwwroot\CPRG211Project.sq4oxpoamv.bundle.scp.css</PackagePath>
-      <Modified>2025-04-18T18:59:51.791</Modified>
+      <Modified>2025-04-19T05:42:21.455</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\papho\OneDrive\Documents\GitHub\cprg211_project\CPRG211Project\Components\Layout\MainLayout.razor.css">
       <PackagePath>Components\Layout\MainLayout.razor.css</PackagePath>
