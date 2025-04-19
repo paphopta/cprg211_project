@@ -19,6 +19,8 @@ CREATE TABLE job_order (
     order_id VARCHAR(10) PRIMARY KEY, 
     customer_id VARCHAR(10), 
     order_date DATE, 
+    work_description VARCHAR(500), 
+    service_charge DOUBLE(9,2), 
     total_price DOUBLE(9,2)
 );
 

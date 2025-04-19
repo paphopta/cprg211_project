@@ -24,17 +24,17 @@ INSERT INTO inventory (part_id, brand, model, part_name, unit_price, inventory_q
 ('P-46289310', 'Power Drive', 'QuickSpin-XT', 'High-Performance Alternator', 45.80, 250),
 ('P-83957164', 'Auto Fusion', 'TorqueMaster-7X', 'Multi-Speed Gearbox Shaft', 120.00, 180);
 
-INSERT INTO job_order (order_id, customer_id, order_date, total_price) VALUES
-('O-00000001', 'C-00000005', '2022-05-17', 3500.75),
-('O-00000002', 'C-00000002', '2022-09-03', 4800.50),
-('O-00000003', 'C-00000001', '2022-11-22', 2150.90),
-('O-00000004', 'C-00000001', '2023-01-14', 1500.00),
-('O-00000005', 'C-00000001', '2023-06-29', 2250.30),
-('O-00000006', 'C-00000008', '2023-08-24', 3100.45),
-('O-00000007', 'C-00000003', '2023-11-12', 2750.60),
-('O-00000008', 'C-00000010', '2024-02-06', 5400.80),
-('O-00000009', 'C-00000005', '2024-04-18', 3800.00),
-('O-00000010', 'C-00000002', '2024-07-09', 4000.25);
+INSERT INTO job_order (order_id, customer_id, order_date, work_description, service_charge, total_price) VALUES
+('O-00000001', 'C-00000005', '2022-05-17', 'Inspect and replace worn-out fan belts on air handling unit #3 in Zone B. Check alignment and tension. Record belt size and replacement date in maintenance log.', 50, 3500.75),
+('O-00000002', 'C-00000002', '2022-09-03', 'Diagnose and repair hydraulic leak on forklift #12. Clean the area, identify leak source, replace faulty hose or fittings, and test for proper operation.', 25, 4800.50),
+('O-00000003', 'C-00000001', '2022-11-22', 'Service rooftop HVAC unit: clean condenser coils, inspect blower motor, replace air filters, and check refrigerant levels. Report any signs of wear or malfunction.', 100, 2150.90),
+('O-00000004', 'C-00000001', '2023-01-14', 'Lubricate all bearings on conveyor line A. Inspect chain tension and adjust as needed. Note any unusual wear patterns or alignment issues.', 200, 1500.00),
+('O-00000005', 'C-00000001', '2023-06-29', 'Replace broken drive shaft on motor pump unit #5. Ensure correct alignment, torque bolts to specification, and test under load after installation.', 500, 2250.30),
+('O-00000006', 'C-00000008', '2023-08-24', 'Perform scheduled oil change on air compressor #2. Replace oil filter, check for leaks, and record oil pressure and temperature after maintenance.', 80, 3100.45),
+('O-00000007', 'C-00000003', '2023-11-12', 'Test emergency generator for load performance. Run full test cycle, check battery voltage, fuel levels, and output stability. Record results.', 0, 2750.60),
+('O-00000008', 'C-00000010', '2024-02-06', 'Recalibrate pressure sensors on boiler system. Use calibrated equipment, document sensor values pre- and post-adjustment, and verify with system control.', 500, 5400.80),
+('O-00000009', 'C-00000005', '2024-04-18', 'Investigate abnormal vibration in mixer motor #4. Check mounting bolts, inspect bearings, and perform vibration analysis if needed.', 30, 3800.00),
+('O-00000010', 'C-00000002', '2024-07-09', 'Replace worn-out brake pads on maintenance cart #6. Inspect rotors and calipers for damage, test brakes after installation, and sign off safety checklist.', 1000, 4000.25);
 
 INSERT INTO job_order_inventory (order_id, part_id, order_quantity) VALUES
 ('O-00000001', 'P-10874295', 1),
