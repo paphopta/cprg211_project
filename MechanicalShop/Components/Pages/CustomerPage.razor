@@ -1,8 +1,250 @@
 ﻿@page "/customerpage"
 @using MechanicalShop.Data
+@using MySqlConnector
+@inject IJSRuntime JS
 
 <h3>Customer</h3>
 
-@code {
+<div class="d-grid gap-2 col-6 mx-auto my-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">Add New Customer</button>
+</div>
 
+<table class="table align-middle table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var myCustomer in customers)
+        {
+            <tr>
+                <td>@myCustomer.CustomerId</td>
+                <td>@myCustomer.FirstName</td>
+                <td>@myCustomer.LastName</td>
+                <td>@myCustomer.Phone</td>
+                <td>@myCustomer.Email</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateCustomerModal" @onclick="()=> ShowCustomer(myCustomer)">Update</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" @onclick="()=> DeleteCustomer(myCustomer)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Add Customer Modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addCustomerModalLabel">Add Customer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label">Customer ID</label>
+                        <input class="form-control" placeholder="Customer ID" @bind="newCustomerId">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" placeholder="First Name" @bind="newFirstName">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control" placeholder="Last Name" @bind="newLastName">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" placeholder="Phone" @bind="newPhone">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" placeholder="Email" @bind="newEmail">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="AddCustomer">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Customer Modal -->
+<div class="modal fade" id="updateCustomerModal" tabindex="-1" aria-labelledby="updateCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateCustomerModalLabel">Update Customer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label">Customer ID</label>
+                        <input class="form-control" placeholder="Customer ID" @bind="newCustomerId">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" placeholder="First Name" @bind="newFirstName">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control" placeholder="Last Name" @bind="newLastName">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" placeholder="Phone" @bind="newPhone">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" placeholder="Email" @bind="newEmail">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="updateModal" @onclick="UpdateCustomer">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private List<Customer> customers;
+    private Customer oldCustomer;
+    private string? newCustomerId;
+    private string? newFirstName;
+    private string? newLastName;
+    private string? newPhone;
+    private string? newEmail;
+    private MySqlConnectionStringBuilder builder;
+    private MySqlConnection connection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = new List<Customer>();
+        builder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Database = "cprg211project",
+                UserID = "root",
+                Password = "1234",
+            };
+        connection = new MySqlConnection(builder.ConnectionString);
+        LoadCustomer();
+    }
+
+    private void LoadCustomer()
+    {
+        connection.Open();
+        string sql = "select * from customer";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                string customerId = Convert.ToString(reader["customer_id"]);
+                string firstName = Convert.ToString(reader["first_name"]);
+                string lastName = Convert.ToString(reader["last_name"]);
+                string phone = Convert.ToString(reader["phone"]);
+                string email = Convert.ToString(reader["email"]);
+
+                Customer newCustomer = new Customer(customerId, firstName, lastName, phone, email);
+                customers.Add(newCustomer);
+            }
+        }
+        connection.Close();
+    }
+
+    private void AddCustomer()
+    {
+        Customer newCustomer = new Customer(newCustomerId, newFirstName, newLastName, newPhone, newEmail);
+        customers.Add(newCustomer);
+        newCustomerId = "";
+        newFirstName = "";
+        newLastName = "";
+        newPhone = "";
+        newEmail = "";
+
+        connection.Open();
+        string sql = $"INSERT INTO customer (customer_id, first_name, last_name, phone, email) VALUES ('{newCustomer.CustomerId}','{newCustomer.FirstName}','{newCustomer.LastName}','{newCustomer.Phone}','{newCustomer.Email}')";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+
+        JS.InvokeVoidAsync("hideModal", "addCustomerModal");
+    }
+
+    private void ShowCustomer(Customer myCustomer)
+    {
+        oldCustomer = new Customer(myCustomer.CustomerId, myCustomer.FirstName, myCustomer.LastName, myCustomer.Phone, myCustomer.Email);
+        newCustomerId = myCustomer.CustomerId;
+        newFirstName = myCustomer.FirstName;
+        newLastName = myCustomer.LastName;
+        newPhone = myCustomer.Phone;
+        newEmail = myCustomer.Email;
+    }
+
+    private void UpdateCustomer()
+    {
+        int index = 0;
+        bool found = false;
+
+        foreach (Customer myCustomer in customers)
+        {
+            if (oldCustomer.CustomerId == myCustomer.CustomerId && oldCustomer.FirstName == myCustomer.FirstName && oldCustomer.Phone == myCustomer.Phone && oldCustomer.Email == myCustomer.Email)
+            {
+                found = true;
+                break;
+            }
+            index++;
+        }
+
+        if (found)
+        {
+            customers[index].CustomerId = newCustomerId;
+            customers[index].FirstName = newFirstName;
+            customers[index].LastName = newLastName;
+            customers[index].Phone = newPhone;
+            customers[index].Email = newEmail;
+        }
+        newCustomerId = "";
+        newFirstName = "";
+        newLastName = "";
+        newPhone = "";
+        newEmail = "";
+
+        connection.Open();
+        string sql = $"UPDATE customer SET customer_id = '{customers[index].CustomerId}', first_name = '{customers[index].FirstName}', last_name = '{customers[index].LastName}', phone = '{customers[index].Phone}', email = '{customers[index].Email}' WHERE customer_id = '{oldCustomer.CustomerId}' AND first_name = '{oldCustomer.FirstName}' AND last_name = '{oldCustomer.LastName}' AND phone = '{oldCustomer.Phone}' AND email = '{oldCustomer.Email}'";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+
+        JS.InvokeVoidAsync("hideModal", "updateCustomerModal");
+    }
+
+    private void DeleteCustomer(Customer myCustomer)
+    {
+        oldCustomer = new Customer(myCustomer.CustomerId, myCustomer.FirstName, myCustomer.LastName, myCustomer.Phone, myCustomer.Email);
+        customers.Remove(myCustomer);
+
+        connection.Open();
+        string sql = $"DELETE FROM customer WHERE customer_id = '{oldCustomer.CustomerId}' AND first_name = '{oldCustomer.FirstName}' AND last_name = '{oldCustomer.LastName}' AND phone = '{oldCustomer.Phone}' AND email = '{oldCustomer.Email}'";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
 }
