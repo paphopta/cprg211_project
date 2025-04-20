@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@using MechanicalShop.Data
 
 <h1>Counter</h1>
 
@@ -12,5 +13,6 @@
     private void IncrementCount()
     {
         currentCount++;
+        Customer aaa = new Customer("aa","bb","cc","dd","ss");
     }
 }
