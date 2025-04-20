@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MechanicalShop.Data
 {
-    public class Customer
+    public class Inventory
     {
     }
 }
