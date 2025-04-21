@@ -146,7 +146,7 @@
     private void LoadCustomer()
     {
         connection.Open();
-        string sql = "select * from customer";
+        string sql = "SELECT * FROM customer";
         MySqlCommand command = new MySqlCommand(sql, connection);
         using (MySqlDataReader reader = command.ExecuteReader())
         {

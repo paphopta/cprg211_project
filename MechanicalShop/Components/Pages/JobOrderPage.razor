@@ -1,8 +1,96 @@
 ﻿@page "/joborderpage"
 @using MechanicalShop.Data
+@using MySqlConnector
+@inject IJSRuntime JS
 
 <h3>Job Order</h3>
 
-@code {
+<div class="d-grid gap-2 col-6 mx-auto my-3">
+    <button type="button" class="btn btn-primary">Add New Order</button>
+</div>
+<table class="table align-middle table-striped">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col" class="text-center">First Name</th>
+            <th scope="col" class="text-center">Last Name</th>
+            <th scope="col" class="text-center">Order Date</th>
+            <th scope="col" class="text-center">Total Price</th>
+            <th scope="col" class="text-center">Status</th>
+            <th scope="col" class="text-center">View/Update</th>
+            <th scope="col" class="text-center">Delete</th>
+        </tr>
+        @foreach (var myJobOrder in jobOrders)
+        {
+            <tr>
+                <td>@myJobOrder.OrderId</td>
+                <td>@myJobOrder.FirstName</td>
+                <td>@myJobOrder.LastName</td>
+                <td class="text-center">@myJobOrder.OrderDate.ToString("yyyy-MM-dd")</td>
+                <td class="text-end">@myJobOrder.TotalPrice.ToString("N2")</td>
+                <td class="text-center">@jobStatus[myJobOrder.Status]</td>
+                <td class="text-center"><button type="button" class="btn btn-primary btn-sm">View/Update</button></td>
+                <td class="text-center"><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
+            </tr>
+        }
+    </thead>
+</table>
 
+
+@code {
+    private List<JobOrder> jobOrders;
+    string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
+    private MySqlConnectionStringBuilder builder;
+    private MySqlConnection connection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        jobOrders = new List<JobOrder>();
+        builder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Database = "cprg211project",
+                UserID = "root",
+                Password = "1234",
+            };
+        connection = new MySqlConnection(builder.ConnectionString);
+        LoadJobOrder();
+    }
+
+    private void LoadJobOrder()
+    {
+        connection.Open();
+        string sql = "SELECT * FROM job_order";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                string orderId = Convert.ToString(reader["order_id"]);
+                string customerId = Convert.ToString(reader["customer_id"]);
+                DateTime orderDate = Convert.ToDateTime(reader["order_date"]);
+                string workDescription = Convert.ToString(reader["work_description"]);
+                double serviceCharge = Convert.ToDouble(reader["service_charge"]);
+                double totalPrice = Convert.ToDouble(reader["total_price"]);
+                int status = Convert.ToInt32(reader["status"]);
+
+                JobOrder newJobOrder = new JobOrder(orderId, customerId, orderDate, workDescription, serviceCharge, totalPrice, status, "", "");
+                jobOrders.Add(newJobOrder);
+            }
+        }
+        foreach (JobOrder myJobOrder in jobOrders)
+        {
+            sql = $"SELECT * FROM customer WHERE customer_id = '{myJobOrder.CustomerId}'";
+            command = new MySqlCommand(sql, connection);
+            using (MySqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    myJobOrder.FirstName = Convert.ToString(reader["first_name"]);
+                    myJobOrder.LastName = Convert.ToString(reader["last_name"]);
+                }
+            }
+        }
+        connection.Close();
+    }
 }
