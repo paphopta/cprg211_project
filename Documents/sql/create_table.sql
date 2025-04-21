@@ -21,7 +21,8 @@ CREATE TABLE job_order (
     order_date DATE, 
     work_description VARCHAR(500), 
     service_charge DOUBLE(9,2), 
-    total_price DOUBLE(9,2)
+    total_price DOUBLE(9,2), 
+    status INT
 );
 
 CREATE TABLE job_order_inventory (
