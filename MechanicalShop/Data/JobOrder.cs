@@ -19,6 +19,18 @@ namespace MechanicalShop.Data
         public int Status { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public JobOrder()
+        {
+            this.OrderId = null;
+            this.CustomerId = null;
+            this.OrderDate = DateTime.Now;
+            this.WorkDescription = null;
+            this.ServiceCharge = 0;
+            this.TotalPrice = 0;
+            this.Status = 0;
+            this.FirstName = null;
+            this.LastName = null;
+        }
         public JobOrder(string orderId, string customerId, DateTime orderDate, string workDescription, double serviceCharge, double totalPrice, int status, string firstName, string lastName)
         {
             this.OrderId = orderId;

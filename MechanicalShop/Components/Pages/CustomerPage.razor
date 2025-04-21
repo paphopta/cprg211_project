@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var myCustomer in customers)
+        @foreach (Customer myCustomer in customers)
         {
             <tr>
                 <td>@myCustomer.CustomerId</td>
@@ -193,25 +193,19 @@
     private void UpdateCustomer()
     {
         int index = 0;
-        bool found = false;
 
         foreach (Customer myCustomer in customers)
         {
             if (oldCustomer.CustomerId == myCustomer.CustomerId && oldCustomer.FirstName == myCustomer.FirstName && oldCustomer.LastName == myCustomer.LastName && oldCustomer.Phone == myCustomer.Phone && oldCustomer.Email == myCustomer.Email)
             {
-                found = true;
+                myCustomer.CustomerId = newCustomerId;
+                myCustomer.FirstName = newFirstName;
+                myCustomer.LastName = newLastName;
+                myCustomer.Phone = newPhone;
+                myCustomer.Email = newEmail;
                 break;
             }
             index++;
-        }
-
-        if (found)
-        {
-            customers[index].CustomerId = newCustomerId;
-            customers[index].FirstName = newFirstName;
-            customers[index].LastName = newLastName;
-            customers[index].Phone = newPhone;
-            customers[index].Email = newEmail;
         }
         ClearCustomerNewVariable();
 

@@ -1,12 +1,13 @@
 ﻿@page "/joborderpage"
 @using MechanicalShop.Data
 @using MySqlConnector
+@inject NavigationManager Navigation
 @inject IJSRuntime JS
 
 <h3>Job Order</h3>
 
 <div class="d-grid gap-2 col-6 mx-auto my-3">
-    <button type="button" class="btn btn-primary">Add New Order</button>
+    <button type="button" class="btn btn-primary" @onclick="()=> GoToIndividualPage(new JobOrder())">Add New Order</button>
 </div>
 <table class="table align-middle table-striped">
     <thead>
@@ -20,7 +21,7 @@
             <th scope="col" class="text-center">View/Update</th>
             <th scope="col" class="text-center">Delete</th>
         </tr>
-        @foreach (var myJobOrder in jobOrders)
+        @foreach (JobOrder myJobOrder in jobOrders)
         {
             <tr>
                 <td>@myJobOrder.OrderId</td>
@@ -29,8 +30,8 @@
                 <td class="text-center">@myJobOrder.OrderDate.ToString("yyyy-MM-dd")</td>
                 <td class="text-end">@myJobOrder.TotalPrice.ToString("N2")</td>
                 <td class="text-center">@jobStatus[myJobOrder.Status]</td>
-                <td class="text-center"><button type="button" class="btn btn-primary btn-sm">View/Update</button></td>
-                <td class="text-center"><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
+                <td class="text-center"><button type="button" class="btn btn-primary btn-sm" @onclick="()=> GoToIndividualPage(myJobOrder)">View/Update</button></td>
+                <td class="text-center"><button type="button" class="btn btn-danger btn-sm" @onclick="()=> DeleteJobOrder(myJobOrder)">Delete</button></td>
             </tr>
         }
     </thead>
@@ -39,7 +40,8 @@
 
 @code {
     private List<JobOrder> jobOrders;
-    string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
+    private JobOrder oldJobOrder;
+    private string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
     private MySqlConnectionStringBuilder builder;
     private MySqlConnection connection;
 
@@ -92,5 +94,22 @@
             }
         }
         connection.Close();
+    }
+
+    private void DeleteJobOrder(JobOrder myJobOrder)
+    {
+        oldJobOrder = new JobOrder(myJobOrder.OrderId, myJobOrder.CustomerId, myJobOrder.OrderDate, myJobOrder.WorkDescription, myJobOrder.ServiceCharge, myJobOrder.TotalPrice, myJobOrder.Status, myJobOrder.FirstName, myJobOrder.LastName);
+        jobOrders.Remove(myJobOrder);
+
+        connection.Open();
+        string sql = $"DELETE FROM job_order WHERE order_id = '{oldJobOrder.OrderId}' AND customer_id = '{oldJobOrder.CustomerId}' AND order_date = '{oldJobOrder.OrderDate}' AND work_description = '{oldJobOrder.WorkDescription}' AND service_charge = {oldJobOrder.ServiceCharge} AND total_price = {oldJobOrder.TotalPrice} AND status = {oldJobOrder.Status}";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
+
+    void GoToIndividualPage(JobOrder myJobOrder)
+    {
+        Navigation.NavigateTo($"/joborderindividualpage?updateOrderId={myJobOrder.OrderId}");
     }
 }

@@ -1,0 +1,318 @@
+﻿@page "/joborderindividualpage"
+@using MechanicalShop.Data
+@using MySqlConnector
+@inject NavigationManager Navigation
+
+<h3>Job Order Individual Page</h3>
+
+<div class="mb-3">
+    <div class="row">
+        <div class="col">
+            <label class="form-label">Order ID</label>
+            <input class="form-control" placeholder="Order ID" @bind="newJobOrderId" readonly="@formReadOnly">
+        </div>
+        <div class="col">
+            <label class="form-label">Date</label>
+            <input class="form-control" placeholder="Date" @bind="newOrderDateString">
+        </div>
+        <div class="col">
+            <label class="form-label">Status</label>
+            <select class="form-select" @bind="newStatus">
+                <option value="0">@jobStatus[0]</option>
+                <option value="1">@jobStatus[1]</option>
+                <option value="2">@jobStatus[2]</option>
+                <option value="3">@jobStatus[3]</option>
+                <option value="4">@jobStatus[4]</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+    <div class="row">
+        <div class="col">
+            <label class="form-label">Customer ID</label>
+            <select class="form-select" @bind="newCustomerId" @onclick="getCustomerName">
+                @foreach (Customer myCustomer in customers)
+                {
+                    <option value="@myCustomer.CustomerId">@myCustomer.CustomerId</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label">Name</label>
+            <input class="form-control" @bind="newFirstName" readonly>
+        </div>
+        <div class="col">
+            <label class="form-label">Surname</label>
+            <input class="form-control" @bind="newLastName" readonly>
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+    <label class="form-label">Work Description</label>
+    <textarea class="form-control" rows="3" placeholder="Work Description" @bind="newWorkDescription"></textarea>
+</div>
+TODO Items in Order
+<div class="mb-3">
+    <div class="row">
+        <div class="col">
+            <label class="form-label">Service Charge</label>
+            <input class="form-control" placeholder="Service Charge" @bind="NewServiceChargeString">
+        </div>
+        <div class="col">
+            <label class="form-label">Total Price</label>
+            <input class="form-control" placeholder="Total Price" @bind="newTotalPriceString" readonly=true>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mx-auto">
+    <div class="row">
+        <div class="col d-grid">
+            <button type="button" class="btn btn-primary" @onclick="AddUpdateJobOrder">@buttonName</button>
+        </div>
+        <div class="col d-grid">
+            <button type="button" class="btn btn-danger" @onclick="CancelAddUpdate">Cancel</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, SupplyParameterFromQuery]
+    public string updateOrderId { get; set; }
+
+    private MySqlConnectionStringBuilder builder;
+    private MySqlConnection connection;
+
+    private List<Customer> customers;
+    private List<Inventory> inventories;
+    private List<JobOrder> jobOrders;
+
+    private string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
+
+    enum OperationType
+    {
+        Add,
+        Update
+    }
+    private OperationType operationType;
+    private string buttonName;
+    private bool formReadOnly;
+
+    private string? newJobOrderId;
+    private DateTime newOrderDate;
+    private int newStatus;
+    private string? newCustomerId;
+    private string? newFirstName;
+    private string? newLastName;
+    private string? newWorkDescription;
+    private double newServiceCharge;
+    private double newTotalPrice;
+    private string? newOrderDateString;
+    private string? newServiceChargeString;
+    public string? NewServiceChargeString
+    {
+        get => newServiceChargeString;
+        set
+        {
+            newServiceChargeString = value;
+            CalculateTotalPrice();
+        }
+    }
+    private string? newTotalPriceString;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = new List<Customer>();
+
+        inventories = new List<Inventory>();
+        jobOrders = new List<JobOrder>();
+        builder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Database = "cprg211project",
+                UserID = "root",
+                Password = "1234",
+            };
+        connection = new MySqlConnection(builder.ConnectionString);
+        LoadCustomer();
+        LoadInventory();
+        LoadJobOrder();
+
+        if (updateOrderId == "")
+        {
+            buttonName = "Add New Order";
+            operationType = OperationType.Add;
+            formReadOnly = false;
+            newJobOrderId = "";
+            newOrderDate = DateTime.Now;
+            newStatus = 0;
+            newCustomerId = customers[0].CustomerId;
+            getCustomerName();
+            newWorkDescription = "";
+            newServiceCharge = 0;
+            newTotalPrice = 0;
+        }
+        else
+        {
+            buttonName = "Update Order";
+            operationType = OperationType.Update;
+            formReadOnly = true;
+            newJobOrderId = updateOrderId;
+            foreach (JobOrder myJobOrder in jobOrders)
+            {
+                if (myJobOrder.OrderId == newJobOrderId)
+                {
+                    newOrderDate = myJobOrder.OrderDate;
+                    newStatus = myJobOrder.Status;
+                    newCustomerId = myJobOrder.CustomerId;
+                    newWorkDescription = myJobOrder.WorkDescription;
+                    newServiceCharge = myJobOrder.ServiceCharge;
+                    newTotalPrice = myJobOrder.TotalPrice;
+                    break;
+                }
+            }
+            getCustomerName();
+        }
+        newServiceChargeString = newServiceCharge.ToString("N2");
+        newTotalPriceString = newTotalPrice.ToString("N2");
+        newOrderDateString = newOrderDate.ToString("yyyy-MM-dd");
+    }
+
+    private void getCustomerName()
+    {
+        foreach (Customer myCustomer in customers)
+        {
+            if (myCustomer.CustomerId == newCustomerId)
+            {
+                newFirstName = myCustomer.FirstName;
+                newLastName = myCustomer.LastName;
+                break;
+            }
+        }
+    }
+
+    private void LoadCustomer()
+    {
+        connection.Open();
+        string sql = "SELECT * FROM customer";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                string customerId = Convert.ToString(reader["customer_id"]);
+                string firstName = Convert.ToString(reader["first_name"]);
+                string lastName = Convert.ToString(reader["last_name"]);
+                string phone = Convert.ToString(reader["phone"]);
+                string email = Convert.ToString(reader["email"]);
+
+                Customer newCustomer = new Customer(customerId, firstName, lastName, phone, email);
+                customers.Add(newCustomer);
+            }
+        }
+        connection.Close();
+    }
+
+    private void LoadInventory()
+    {
+        connection.Open();
+        string sql = "SELECT * FROM inventory";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                string partId = Convert.ToString(reader["part_id"]);
+                string brand = Convert.ToString(reader["brand"]);
+                string model = Convert.ToString(reader["model"]);
+                string partName = Convert.ToString(reader["part_name"]);
+                double unitPrice = Convert.ToDouble(reader["unit_price"]);
+                int inventoryQuantity = Convert.ToInt32(reader["inventory_quantity"]);
+
+                Inventory newInventory = new Inventory(partId, brand, model, partName, unitPrice, inventoryQuantity);
+                inventories.Add(newInventory);
+            }
+        }
+        connection.Close();
+    }
+
+    private void LoadJobOrder()
+    {
+        connection.Open();
+        string sql = "SELECT * FROM job_order";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                string orderId = Convert.ToString(reader["order_id"]);
+                string customerId = Convert.ToString(reader["customer_id"]);
+                DateTime orderDate = Convert.ToDateTime(reader["order_date"]);
+                string workDescription = Convert.ToString(reader["work_description"]);
+                double serviceCharge = Convert.ToDouble(reader["service_charge"]);
+                double totalPrice = Convert.ToDouble(reader["total_price"]);
+                int status = Convert.ToInt32(reader["status"]);
+
+                JobOrder newJobOrder = new JobOrder(orderId, customerId, orderDate, workDescription, serviceCharge, totalPrice, status, "", "");
+                jobOrders.Add(newJobOrder);
+            }
+        }
+        foreach (JobOrder myJobOrder in jobOrders)
+        {
+            sql = $"SELECT * FROM customer WHERE customer_id = '{myJobOrder.CustomerId}'";
+            command = new MySqlCommand(sql, connection);
+            using (MySqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    myJobOrder.FirstName = Convert.ToString(reader["first_name"]);
+                    myJobOrder.LastName = Convert.ToString(reader["last_name"]);
+                }
+            }
+        }
+        connection.Close();
+    }
+
+    private void CalculateTotalPrice()
+    {
+        newServiceCharge = Convert.ToDouble(newServiceChargeString);
+        newTotalPrice = newServiceCharge;
+        newTotalPriceString = newTotalPrice.ToString("N2");
+    }
+
+    private void AddUpdateJobOrder()
+    {
+        CalculateTotalPrice();
+
+        newOrderDate = Convert.ToDateTime(newOrderDateString);
+
+        if (operationType == OperationType.Add)
+        {
+            JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
+
+            connection.Open();
+            string sql = $"INSERT INTO job_order (order_id, customer_id, order_date, work_description, service_charge, total_price, status) VALUES ('{newJobOrder.OrderId}','{newJobOrder.CustomerId}','{newJobOrder.OrderDate}','{newJobOrder.WorkDescription}',{newJobOrder.ServiceCharge}, {newJobOrder.TotalPrice}, {newJobOrder.Status})";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+        else
+        {
+            JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
+
+            connection.Open();
+            string sql = $"UPDATE job_order SET customer_id = '{newJobOrder.CustomerId}', order_date = '{newJobOrder.OrderDate}', work_description = '{newJobOrder.WorkDescription}', service_charge = {newJobOrder.ServiceCharge}, total_price = {newJobOrder.TotalPrice}, status = {newJobOrder.Status} WHERE order_id = '{newJobOrder.OrderId}'";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
+        Navigation.NavigateTo("/joborderpage");
+    }
+
+    private void CancelAddUpdate()
+    {
+        Navigation.NavigateTo("/joborderpage");
+    }
+}

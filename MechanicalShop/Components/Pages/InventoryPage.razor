@@ -23,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var myInventory in inventories)
+        @foreach (Inventory myInventory in inventories)
         {
             <tr>
                 <td>@myInventory.PartId</td>
@@ -206,26 +206,20 @@
     private void UpdateInventory()
     {
         int index = 0;
-        bool found = false;
 
         foreach (Inventory myInventory in inventories)
         {
             if (oldInventory.PartId == myInventory.PartId && oldInventory.Brand == myInventory.Brand && oldInventory.Model == myInventory.Model && oldInventory.PartName == myInventory.PartName && oldInventory.UnitPrice == myInventory.UnitPrice && oldInventory.InventoryQuantity == myInventory.InventoryQuantity)
             {
-                found = true;
+                myInventory.PartId = newPartId;
+                myInventory.Brand = newBrand;
+                myInventory.Model = newModel;
+                myInventory.PartName = newPartName;
+                myInventory.UnitPrice = newUnitPrice;
+                myInventory.InventoryQuantity = newInventoryQuantity;
                 break;
             }
             index++;
-        }
-
-        if (found)
-        {
-            inventories[index].PartId = newPartId;
-            inventories[index].Brand = newBrand;
-            inventories[index].Model = newModel;
-            inventories[index].PartName = newPartName;
-            inventories[index].UnitPrice = newUnitPrice;
-            inventories[index].InventoryQuantity = newInventoryQuantity;
         }
         ClearInventoryNewVariable();
 
