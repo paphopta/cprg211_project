@@ -52,8 +52,63 @@
     <label class="form-label">Work Description</label>
     <textarea class="form-control" rows="3" placeholder="Work Description" @bind="newWorkDescription"></textarea>
 </div>
-TODO Items in Order
-<div class="mb-3">
+<table class="table align-middle table-striped my-4">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col" class="text-center">Brand</th>
+            <th scope="col" class="text-center">Model</th>
+            <th scope="col" class="text-center">Part Name</th>
+            <th scope="col" class="text-center">Quantity</th>
+            <th scope="col" class="text-center">Unit Price</th>
+            <th scope="col" class="text-center">Total</th>
+            <th scope="col" class="text-center">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (JobOrderItem items in newJobOrderItemList)
+        {
+            <tr>
+                <td>@items.PartId</td>
+                <td>@(inventories.Find(x => x.PartId.Contains(items.PartId)).Brand)</td>
+                <td>@(inventories.Find(x => x.PartId.Contains(items.PartId)).Model)</td>
+                <td>@(inventories.Find(x => x.PartId.Contains(items.PartId)).PartName)</td>
+                <td class="text-end">@items.OrderQuantity</td>
+                <td class="text-end">@(inventories.Find(x => x.PartId.Contains(items.PartId)).UnitPrice.ToString("N2"))</td>
+                <td class="text-end">@items.Total.ToString("N2")</td>
+                <td class="text-center"><button type="button" class="btn btn-danger btn-sm" @onclick="()=> DeleteItem(items)">Delete</button></td>
+            </tr>
+        }
+        <tr>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+            <td class="text-center">-----</td>
+        </tr>
+        <tr>
+            <td>
+                <select class="form-select" @bind="newItemId" @onclick="getItemInformation">
+                    @foreach (Inventory myInventory in inventories)
+                    {
+                        <option value="@myInventory.PartId">@myInventory.PartId</option>
+                    }
+                </select>
+            </td>
+            <td>@newItemBrand</td>
+            <td>@newItemModel</td>
+            <td>@newItemPartName</td>
+            <td class="text-end col-1"><input class="form-control text-end" placeholder="Quantity" @bind="NewItemQuantityString"></td>
+            <td class="text-end">@newItemUnitPrice.ToString("N2")</td>
+            <td class="text-end">@newItemUnitTotal.ToString("N2")</td>
+            <td class="text-center"><button type="button" class="btn btn-primary btn-sm" @onclick="AddItem">Add</button></td>
+        </tr>
+    </tbody>
+</table>
+<div class="my-4">
     <div class="row">
         <div class="col">
             <label class="form-label">Service Charge</label>
@@ -108,6 +163,7 @@ TODO Items in Order
     private string? newWorkDescription;
     private double newServiceCharge;
     private double newTotalPrice;
+    private List<JobOrderItem> newJobOrderItemList;
     private string? newOrderDateString;
     private string? newServiceChargeString;
     public string? NewServiceChargeString
@@ -120,6 +176,24 @@ TODO Items in Order
         }
     }
     private string? newTotalPriceString;
+
+    private string? newItemId;
+    private string? newItemBrand;
+    private string? newItemModel;
+    private string? newItemPartName;
+    private int newItemQuantity;
+    public string? newItemQuantityString;
+    public string? NewItemQuantityString
+    {
+        get => newItemQuantityString;
+        set
+        {
+            newItemQuantityString = value;
+            CalculateQuantityPrice();
+        }
+    }
+    private double newItemUnitPrice;
+    private double newItemUnitTotal;
 
     protected override async Task OnInitializedAsync()
     {
@@ -150,6 +224,7 @@ TODO Items in Order
             newCustomerId = customers[0].CustomerId;
             getCustomerName();
             newWorkDescription = "";
+            newJobOrderItemList = new List<JobOrderItem>();
             newServiceCharge = 0;
             newTotalPrice = 0;
         }
@@ -167,6 +242,7 @@ TODO Items in Order
                     newStatus = myJobOrder.Status;
                     newCustomerId = myJobOrder.CustomerId;
                     newWorkDescription = myJobOrder.WorkDescription;
+                    newJobOrderItemList = myJobOrder.JobOrderItems;
                     newServiceCharge = myJobOrder.ServiceCharge;
                     newTotalPrice = myJobOrder.TotalPrice;
                     break;
@@ -174,22 +250,28 @@ TODO Items in Order
             }
             getCustomerName();
         }
+        newItemId = inventories[0].PartId;
+        getItemInformation();
         newServiceChargeString = newServiceCharge.ToString("N2");
         newTotalPriceString = newTotalPrice.ToString("N2");
         newOrderDateString = newOrderDate.ToString("yyyy-MM-dd");
+        CalculateTotalPrice();
     }
 
     private void getCustomerName()
     {
-        foreach (Customer myCustomer in customers)
-        {
-            if (myCustomer.CustomerId == newCustomerId)
-            {
-                newFirstName = myCustomer.FirstName;
-                newLastName = myCustomer.LastName;
-                break;
-            }
-        }
+        newFirstName = customers.Find(x => x.CustomerId.Contains(newCustomerId)).FirstName;
+        newLastName = customers.Find(x => x.CustomerId.Contains(newCustomerId)).LastName;
+    }
+
+    private void getItemInformation()
+    {
+        newItemBrand = inventories.Find(x => x.PartId.Contains(newItemId)).Brand;
+        newItemModel = inventories.Find(x => x.PartId.Contains(newItemId)).Model;
+        newItemPartName = inventories.Find(x => x.PartId.Contains(newItemId)).PartName;
+        newItemQuantity = 0;
+        newItemUnitPrice = inventories.Find(x => x.PartId.Contains(newItemId)).UnitPrice;
+        newItemUnitTotal = 0;
     }
 
     private void LoadCustomer()
@@ -270,6 +352,21 @@ TODO Items in Order
                     myJobOrder.LastName = Convert.ToString(reader["last_name"]);
                 }
             }
+
+            sql = $"SELECT part_id, order_quantity FROM job_order_inventory WHERE order_id = '{myJobOrder.OrderId}'";
+            command = new MySqlCommand(sql, connection);
+            using (MySqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string partId = Convert.ToString(reader["part_id"]);
+                    int orderQuantity = Convert.ToInt32(reader["order_quantity"]);
+
+                    JobOrderItem newJobOrderItem = new JobOrderItem(partId, orderQuantity);
+                    newJobOrderItem.CalculateTotal(inventories.Find(x => x.PartId.Contains(newJobOrderItem.PartId)).UnitPrice);
+                    myJobOrder.JobOrderItems.Add(newJobOrderItem);
+                }
+            }
         }
         connection.Close();
     }
@@ -277,12 +374,35 @@ TODO Items in Order
     private void CalculateTotalPrice()
     {
         newServiceCharge = Convert.ToDouble(newServiceChargeString);
-        newTotalPrice = newServiceCharge;
+        newTotalPrice = newServiceCharge + newJobOrderItemList.Sum(x => x.Total);
         newTotalPriceString = newTotalPrice.ToString("N2");
+    }
+
+    private void CalculateQuantityPrice()
+    {
+        newItemQuantity = Convert.ToInt32(newItemQuantityString);
+        newItemUnitTotal = newItemQuantity * newItemUnitPrice;
+        CalculateTotalPrice();
+    }
+
+    private void AddItem()
+    {
+        JobOrderItem newJobOrderItem = new JobOrderItem(newItemId, newItemQuantity);
+        newJobOrderItem.CalculateTotal(inventories.Find(x => x.PartId.Contains(newItemId)).UnitPrice);
+        newJobOrderItemList.Add(newJobOrderItem);
+        CalculateTotalPrice();
+    }
+
+    private void DeleteItem(JobOrderItem myJobOrderItem)
+    {
+        newJobOrderItemList.Remove(newJobOrderItemList.Find(x => x.PartId.Contains(myJobOrderItem.PartId)));
+        CalculateTotalPrice();
     }
 
     private void AddUpdateJobOrder()
     {
+        string sql;
+        MySqlCommand command;
         CalculateTotalPrice();
 
         newOrderDate = Convert.ToDateTime(newOrderDateString);
@@ -292,8 +412,8 @@ TODO Items in Order
             JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
 
             connection.Open();
-            string sql = $"INSERT INTO job_order (order_id, customer_id, order_date, work_description, service_charge, total_price, status) VALUES ('{newJobOrder.OrderId}','{newJobOrder.CustomerId}','{newJobOrder.OrderDate}','{newJobOrder.WorkDescription}',{newJobOrder.ServiceCharge}, {newJobOrder.TotalPrice}, {newJobOrder.Status})";
-            MySqlCommand command = new MySqlCommand(sql, connection);
+            sql = $"INSERT INTO job_order (order_id, customer_id, order_date, work_description, service_charge, total_price, status) VALUES ('{newJobOrder.OrderId}','{newJobOrder.CustomerId}','{newJobOrder.OrderDate}','{newJobOrder.WorkDescription}',{newJobOrder.ServiceCharge}, {newJobOrder.TotalPrice}, {newJobOrder.Status})";
+            command = new MySqlCommand(sql, connection);
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -302,11 +422,24 @@ TODO Items in Order
             JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
 
             connection.Open();
-            string sql = $"UPDATE job_order SET customer_id = '{newJobOrder.CustomerId}', order_date = '{newJobOrder.OrderDate}', work_description = '{newJobOrder.WorkDescription}', service_charge = {newJobOrder.ServiceCharge}, total_price = {newJobOrder.TotalPrice}, status = {newJobOrder.Status} WHERE order_id = '{newJobOrder.OrderId}'";
-            MySqlCommand command = new MySqlCommand(sql, connection);
+            sql = $"UPDATE job_order SET customer_id = '{newJobOrder.CustomerId}', order_date = '{newJobOrder.OrderDate}', work_description = '{newJobOrder.WorkDescription}', service_charge = {newJobOrder.ServiceCharge}, total_price = {newJobOrder.TotalPrice}, status = {newJobOrder.Status} WHERE order_id = '{newJobOrder.OrderId}'";
+            command = new MySqlCommand(sql, connection);
             command.ExecuteNonQuery();
             connection.Close();
         }
+
+        connection.Open();
+        sql = $"DELETE FROM job_order_inventory WHERE order_id = '{newJobOrderId}'";
+        command = new MySqlCommand(sql, connection);
+        command.ExecuteNonQuery();
+
+        foreach (JobOrderItem items in newJobOrderItemList)
+        {
+            sql = $"INSERT INTO job_order_inventory (order_id, part_id, order_quantity) VALUES ('{newJobOrderId}','{items.PartId}',{items.OrderQuantity})";
+            command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+        }
+        connection.Close();
 
         Navigation.NavigateTo("/joborderpage");
     }

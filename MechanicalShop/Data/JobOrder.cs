@@ -17,6 +17,7 @@ namespace MechanicalShop.Data
         public double ServiceCharge { get; set; }
         public double TotalPrice { get; set; }
         public int Status { get; set; }
+        public List<JobOrderItem> JobOrderItems { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public JobOrder()
@@ -28,6 +29,7 @@ namespace MechanicalShop.Data
             this.ServiceCharge = 0;
             this.TotalPrice = 0;
             this.Status = 0;
+            this.JobOrderItems = new List<JobOrderItem>();
             this.FirstName = null;
             this.LastName = null;
         }
@@ -40,6 +42,7 @@ namespace MechanicalShop.Data
             this.ServiceCharge = serviceCharge;
             this.TotalPrice = totalPrice;
             this.Status = status;
+            this.JobOrderItems = new List<JobOrderItem>();
             this.FirstName = firstName;
             this.LastName = lastName;
         }

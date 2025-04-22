@@ -98,13 +98,22 @@
 
     private void DeleteJobOrder(JobOrder myJobOrder)
     {
+        string sql;
+        MySqlCommand command;
+
         oldJobOrder = new JobOrder(myJobOrder.OrderId, myJobOrder.CustomerId, myJobOrder.OrderDate, myJobOrder.WorkDescription, myJobOrder.ServiceCharge, myJobOrder.TotalPrice, myJobOrder.Status, myJobOrder.FirstName, myJobOrder.LastName);
         jobOrders.Remove(myJobOrder);
 
         connection.Open();
-        string sql = $"DELETE FROM job_order WHERE order_id = '{oldJobOrder.OrderId}' AND customer_id = '{oldJobOrder.CustomerId}' AND order_date = '{oldJobOrder.OrderDate}' AND work_description = '{oldJobOrder.WorkDescription}' AND service_charge = {oldJobOrder.ServiceCharge} AND total_price = {oldJobOrder.TotalPrice} AND status = {oldJobOrder.Status}";
-        MySqlCommand command = new MySqlCommand(sql, connection);
+
+        sql = $"DELETE FROM job_order_inventory WHERE order_id = '{oldJobOrder.OrderId}'";
+        command = new MySqlCommand(sql, connection);
         command.ExecuteNonQuery();
+
+        sql = $"DELETE FROM job_order WHERE order_id = '{oldJobOrder.OrderId}' AND customer_id = '{oldJobOrder.CustomerId}' AND order_date = '{oldJobOrder.OrderDate}' AND work_description = '{oldJobOrder.WorkDescription}' AND service_charge = {oldJobOrder.ServiceCharge} AND total_price = {oldJobOrder.TotalPrice} AND status = {oldJobOrder.Status}";
+        command = new MySqlCommand(sql, connection);
+        command.ExecuteNonQuery();
+
         connection.Close();
     }
 
