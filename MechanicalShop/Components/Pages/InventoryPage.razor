@@ -167,7 +167,7 @@
     private MySqlConnectionStringBuilder builder;
     private MySqlConnection connection;
     private List<Inventory> inventories;
-    private Inventory oldInventory;
+    private Inventory existingInventory;
     private string? newPartId;
     private string? newBrand;
     private string? newModel;
@@ -252,7 +252,7 @@
 
     private void ShowInventory(Inventory myInventory)
     {
-        oldInventory = new Inventory(
+        existingInventory = new Inventory(
             myInventory.PartId,
             myInventory.Brand,
             myInventory.Model,
@@ -283,7 +283,7 @@
                 throw new ArgumentException("All fields are required.");
 
             connection.Open();
-            string sql = $"UPDATE inventory SET brand = '{newBrand}', model = '{newModel}', part_name = '{newPartName}', unit_price = {newUnitPrice}, inventory_quantity = {newInventoryQuantity} WHERE part_id = '{oldInventory.PartId}'";
+            string sql = $"UPDATE inventory SET brand = '{newBrand}', model = '{newModel}', part_name = '{newPartName}', unit_price = {newUnitPrice}, inventory_quantity = {newInventoryQuantity} WHERE part_id = '{existingInventory.PartId}'";
             new MySqlCommand(sql, connection).ExecuteNonQuery();
             connection.Close();
 
