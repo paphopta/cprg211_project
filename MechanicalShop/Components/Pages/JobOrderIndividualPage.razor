@@ -242,7 +242,11 @@
                     newStatus = myJobOrder.Status;
                     newCustomerId = myJobOrder.CustomerId;
                     newWorkDescription = myJobOrder.WorkDescription;
-                    newJobOrderItemList = myJobOrder.JobOrderItems;
+                    newJobOrderItemList = new List<JobOrderItem>();
+                    foreach (JobOrderItem myJobOrderItems in myJobOrder.JobOrderItems)
+                    {
+                        newJobOrderItemList.Add(new JobOrderItem(myJobOrderItems.PartId, myJobOrderItems.OrderQuantity, myJobOrderItems.Total));
+                    }
                     newServiceCharge = myJobOrder.ServiceCharge;
                     newTotalPrice = myJobOrder.TotalPrice;
                     break;
@@ -441,6 +445,29 @@
         }
         connection.Close();
 
+        int index = 0;
+        int jobOrderIndex = jobOrders.FindIndex(x => x.OrderId == newJobOrderId);
+        foreach (Inventory myInventory in inventories)
+        {
+            if (jobOrderIndex > -1)
+            {
+                index = jobOrders[jobOrderIndex].JobOrderItems.FindIndex(x => x.PartId == myInventory.PartId);
+                if (index > -1)
+                {
+                    myInventory.InventoryQuantity += jobOrders[jobOrderIndex].JobOrderItems[index].OrderQuantity;
+                }
+            }
+            index = newJobOrderItemList.FindIndex(x => x.PartId == myInventory.PartId);
+            if (index > -1)
+            {
+                myInventory.InventoryQuantity -= newJobOrderItemList[index].OrderQuantity;
+            }
+            connection.Open();
+            sql = $"UPDATE inventory SET inventory_quantity = {myInventory.InventoryQuantity} WHERE part_id = '{myInventory.PartId}'";
+            command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
         Navigation.NavigateTo("/joborderpage");
     }
 

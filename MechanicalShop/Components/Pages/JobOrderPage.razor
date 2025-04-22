@@ -40,6 +40,7 @@
 
 @code {
     private List<JobOrder> jobOrders;
+    private List<Inventory> inventories;
     private JobOrder oldJobOrder;
     private string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
     private MySqlConnectionStringBuilder builder;
@@ -48,6 +49,7 @@
     protected override async Task OnInitializedAsync()
     {
         jobOrders = new List<JobOrder>();
+        inventories = new List<Inventory>();
         builder = new MySqlConnectionStringBuilder
             {
                 Server = "localhost",
@@ -57,6 +59,7 @@
             };
         connection = new MySqlConnection(builder.ConnectionString);
         LoadJobOrder();
+        LoadInventory();
     }
 
     private void LoadJobOrder()
@@ -92,6 +95,42 @@
                     myJobOrder.LastName = Convert.ToString(reader["last_name"]);
                 }
             }
+
+            sql = $"SELECT part_id, order_quantity FROM job_order_inventory WHERE order_id = '{myJobOrder.OrderId}'";
+            command = new MySqlCommand(sql, connection);
+            using (MySqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string partId = Convert.ToString(reader["part_id"]);
+                    int orderQuantity = Convert.ToInt32(reader["order_quantity"]);
+                    JobOrderItem newJobOrderItem = new JobOrderItem(partId, orderQuantity);
+                    myJobOrder.JobOrderItems.Add(newJobOrderItem);
+                }
+            }
+        }
+        connection.Close();
+    }
+
+    private void LoadInventory()
+    {
+        connection.Open();
+        string sql = "SELECT * FROM inventory";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                string partId = Convert.ToString(reader["part_id"]);
+                string brand = Convert.ToString(reader["brand"]);
+                string model = Convert.ToString(reader["model"]);
+                string partName = Convert.ToString(reader["part_name"]);
+                double unitPrice = Convert.ToDouble(reader["unit_price"]);
+                int inventoryQuantity = Convert.ToInt32(reader["inventory_quantity"]);
+
+                Inventory newInventory = new Inventory(partId, brand, model, partName, unitPrice, inventoryQuantity);
+                inventories.Add(newInventory);
+            }
         }
         connection.Close();
     }
@@ -100,6 +139,21 @@
     {
         string sql;
         MySqlCommand command;
+
+        foreach (Inventory myInventory in inventories)
+        {
+            int index = myJobOrder.JobOrderItems.FindIndex(x => x.PartId == myInventory.PartId);
+            if (index > -1)
+            {
+                myInventory.InventoryQuantity += myJobOrder.JobOrderItems[index].OrderQuantity;
+            }
+
+            connection.Open();
+            sql = $"UPDATE inventory SET inventory_quantity = {myInventory.InventoryQuantity} WHERE part_id = '{myInventory.PartId}'";
+            command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
 
         oldJobOrder = new JobOrder(myJobOrder.OrderId, myJobOrder.CustomerId, myJobOrder.OrderDate, myJobOrder.WorkDescription, myJobOrder.ServiceCharge, myJobOrder.TotalPrice, myJobOrder.Status, myJobOrder.FirstName, myJobOrder.LastName);
         jobOrders.Remove(myJobOrder);
