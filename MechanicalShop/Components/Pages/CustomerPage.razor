@@ -1,8 +1,328 @@
 ﻿@page "/customerpage"
+@using System.Text.RegularExpressions
 @using MechanicalShop.Data
+@using MySqlConnector
+@inject IJSRuntime JS
 
-<h3>Customer</h3>
+<script>
+    window.hideModal = function(modalId) {
+        const el = document.getElementById(modalId);
+        if (el) {
+            const modal = bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+            modal.hide();
+        }
+    };
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-4">
+    @if (!string.IsNullOrEmpty(modalError))
+    {
+        <div class="alert alert-danger" role="alert">@modalError</div>
+    }
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="alert alert-success" role="alert">@successMessage</div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            <h3 class="card-title mb-3">Customer Management</h3>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                <i class="bi bi-person-plus-fill"></i> Add New Customer
+            </button>
+        </div>
+    </div>
+
+    <div class="card mt-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Customer List</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cust in customers)
+                        {
+                            <tr>
+                                <td>@cust.CustomerId</td>
+                                <td>@cust.FirstName</td>
+                                <td>@cust.LastName</td>
+                                <td>@cust.Phone</td>
+                                <td>@cust.Email</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateCustomerModal" @onclick="() => ShowCustomer(cust)">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteCustomer(cust)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Customer Modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Add Customer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(modalError))
+                {
+                    <div class="alert alert-danger" role="alert">@modalError</div>
+                }
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Customer ID</label>
+                        <input class="form-control" placeholder="C-12345678" @bind="newCustomerId" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">First Name</label>
+                        <input class="form-control" placeholder="First Name" @bind="newFirstName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Last Name</label>
+                        <input class="form-control" placeholder="Last Name" @bind="newLastName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Phone</label>
+                        <input type="tel" class="form-control" placeholder="123-456-7890" @bind="newPhone" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input type="email" class="form-control" placeholder="example@gmail.com" @bind="newEmail" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClearCustomerNewVariable">Close</button>
+                <button class="btn btn-primary" @onclick="AddCustomer">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Customer Modal -->
+<div class="modal fade" id="updateCustomerModal" tabindex="-1" aria-labelledby="updateCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update Customer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(modalError))
+                {
+                    <div class="alert alert-danger" role="alert">@modalError</div>
+                }
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Customer ID</label>
+                        <input class="form-control" @bind="newCustomerId" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">First Name</label>
+                        <input class="form-control" @bind="newFirstName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Last Name</label>
+                        <input class="form-control" @bind="newLastName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Phone</label>
+                        <input type="tel" class="form-control" @bind="newPhone" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input type="email" class="form-control" @bind="newEmail" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClearCustomerNewVariable">Close</button>
+                <button class="btn btn-primary" @onclick="UpdateCustomer">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private List<Customer> customers = new();
+    private Customer existingCustomer;
+    private string newCustomerId = string.Empty;
+    private string newFirstName = string.Empty;
+    private string newLastName = string.Empty;
+    private string newPhone = string.Empty;
+    private string newEmail = string.Empty;
 
+    private string modalError = string.Empty;
+    private string successMessage = string.Empty;
+
+    private MySqlConnectionStringBuilder builder;
+    private MySqlConnection connection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        builder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Database = "cprg211project",
+                UserID = "root",
+                Password = "1234",
+            };
+        connection = new MySqlConnection(builder.ConnectionString);
+        LoadCustomer();
+    }
+
+    private void LoadCustomer()
+    {
+        customers.Clear();
+        connection.Open();
+        string sql = "SELECT * FROM customer";
+        using var cmd = new MySqlCommand(sql, connection);
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            customers.Add(new Customer(
+                Convert.ToString(reader["customer_id"]),
+                Convert.ToString(reader["first_name"]),
+                Convert.ToString(reader["last_name"]),
+                Convert.ToString(reader["phone"]),
+                Convert.ToString(reader["email"])
+            ));
+        }
+        connection.Close();
+    }
+
+    private void AddCustomer()
+    {
+        modalError = string.Empty;
+        successMessage = string.Empty;
+        try
+        {
+            if (string.IsNullOrWhiteSpace(newCustomerId) ||
+                string.IsNullOrWhiteSpace(newFirstName) ||
+                string.IsNullOrWhiteSpace(newLastName) ||
+                string.IsNullOrWhiteSpace(newPhone) ||
+                string.IsNullOrWhiteSpace(newEmail))
+            {
+                throw new ArgumentException("All fields are required.");
+            }
+            if (!Regex.IsMatch(newCustomerId, "^C-\\d{8}$"))
+                throw new FormatException("Customer ID must be in format C-########.");
+            if (!Regex.IsMatch(newPhone, "^\\d{3}-\\d{3}-\\d{4}$"))
+                throw new FormatException("Phone must be in format ###-###-####.");
+            if (!(newEmail.EndsWith("@email.com")))
+                throw new FormatException("Email must end with @email.com.");
+
+            customers.Add(new Customer(newCustomerId, newFirstName, newLastName, newPhone, newEmail));
+            connection.Open();
+            string sql = $"INSERT INTO customer (customer_id, first_name, last_name, phone, email) VALUES ('{newCustomerId}', '{newFirstName}', '{newLastName}', '{newPhone}', '{newEmail}')";
+            new MySqlCommand(sql, connection).ExecuteNonQuery();
+            connection.Close();
+
+            ClearCustomerNewVariable();
+            JS.InvokeVoidAsync("hideModal", "addCustomerModal");
+            successMessage = "New customer added successfully!";
+        }
+        catch (Exception ex)
+        {
+            modalError = ex.Message;
+        }
+    }
+
+    private void ShowCustomer(Customer cust)
+    {
+        existingCustomer = cust;
+        newCustomerId = cust.CustomerId!;
+        newFirstName = cust.FirstName!;
+        newLastName = cust.LastName!;
+        newPhone = cust.Phone!;
+        newEmail = cust.Email!;
+        modalError = string.Empty;
+        successMessage = string.Empty;
+    }
+
+    private void UpdateCustomer()
+    {
+        modalError = string.Empty;
+        successMessage = string.Empty;
+        try
+        {
+            if (string.IsNullOrWhiteSpace(newFirstName) ||
+                string.IsNullOrWhiteSpace(newLastName) ||
+                string.IsNullOrWhiteSpace(newPhone) ||
+                string.IsNullOrWhiteSpace(newEmail))
+            {
+                throw new ArgumentException("All fields are required.");
+            }
+            if (!Regex.IsMatch(newPhone, "^\\d{3}-\\d{3}-\\d{4}$"))
+                throw new FormatException("Phone must be in format ###-###-####.");
+            if (!(newEmail.EndsWith("@email.com")))
+                throw new FormatException("Email must end with @email.com.");
+
+            connection.Open();
+            string sql = $"UPDATE customer SET first_name = '{newFirstName}', last_name = '{newLastName}', phone = '{newPhone}', email = '{newEmail}' WHERE customer_id = '{existingCustomer.CustomerId}'";
+            new MySqlCommand(sql, connection).ExecuteNonQuery();
+            connection.Close();
+
+            var idx = customers.FindIndex(c => c.CustomerId == existingCustomer.CustomerId);
+            if (idx >= 0)
+            {
+                customers[idx].FirstName = newFirstName;
+                customers[idx].LastName = newLastName;
+                customers[idx].Phone = newPhone;
+                customers[idx].Email = newEmail;
+            }
+
+            ClearCustomerNewVariable();
+            JS.InvokeVoidAsync("hideModal", "updateCustomerModal");
+            successMessage = "Customer updated successfully!";
+        }
+        catch (Exception ex)
+        {
+            modalError = ex.Message;
+        }
+    }
+
+    private void DeleteCustomer(Customer cust)
+    {
+        customers.Remove(cust);
+        connection.Open();
+        string sql = $"DELETE FROM customer WHERE customer_id = '{cust.CustomerId}'";
+        new MySqlCommand(sql, connection).ExecuteNonQuery();
+        connection.Close();
+    }
+
+    private void ClearCustomerNewVariable()
+    {
+        newCustomerId = string.Empty;
+        newFirstName = string.Empty;
+        newLastName = string.Empty;
+        newPhone = string.Empty;
+        newEmail = string.Empty;
+        modalError = string.Empty;
+        successMessage = string.Empty;
+    }
 }

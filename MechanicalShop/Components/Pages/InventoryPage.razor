@@ -1,8 +1,341 @@
 ﻿@page "/inventorypage"
+@using System.Text.RegularExpressions
 @using MechanicalShop.Data
+@using MySqlConnector
+@inject IJSRuntime JS
 
-<h3>Inventory</h3>
+<script>
+    window.hideModal = function(modalId) {
+        const el = document.getElementById(modalId);
+        if (el) {
+            const modal = bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+            modal.hide();
+        }
+    };
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-4">
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="alert alert-success" role="alert">@successMessage</div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            <h3 class="card-title mb-3">Inventory Management</h3>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addInventoryModal">
+                <i class="bi bi-plus-circle-fill"></i> Add New Part
+            </button>
+        </div>
+    </div>
+
+    <div class="card mt-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Parts List</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Part Name</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var inv in inventories)
+                        {
+                            <tr>
+                                <td>@inv.PartId</td>
+                                <td>@inv.Brand</td>
+                                <td>@inv.Model</td>
+                                <td>@inv.PartName</td>
+                                <td class="text-end">@inv.UnitPrice.ToString("C2")</td>
+                                <td class="text-end">@inv.InventoryQuantity</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateInventoryModal" @onclick="() => ShowInventory(inv)">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteInventory(inv)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Inventory Modal -->
+<div class="modal fade" id="addInventoryModal" tabindex="-1" aria-labelledby="addInventoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Part</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(modalError))
+                {
+                    <div class="alert alert-danger" role="alert">@modalError</div>
+                }
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Part ID</label>
+                        <input class="form-control" placeholder="Part ID" @bind="newPartId" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Brand</label>
+                        <input class="form-control" placeholder="Brand" @bind="newBrand" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Model</label>
+                        <input class="form-control" placeholder="Model" @bind="newModel" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Part Name</label>
+                        <input class="form-control" placeholder="Part Name" @bind="newPartName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Unit Price</label>
+                        <input type="number" step="0.01" class="form-control" placeholder="Unit Price" @bind="newUnitPrice" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Quantity</label>
+                        <input type="number" class="form-control" placeholder="Quantity" @bind="newInventoryQuantity" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClearInventoryNewVariable">Close</button>
+                <button class="btn btn-primary" @onclick="AddInventory">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Inventory Modal -->
+<div class="modal fade" id="updateInventoryModal" tabindex="-1" aria-labelledby="updateInventoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Part</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(modalError))
+                {
+                    <div class="alert alert-danger" role="alert">@modalError</div>
+                }
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Part ID</label>
+                        <input class="form-control" @bind="newPartId" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Brand</label>
+                        <input class="form-control" @bind="newBrand" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Model</label>
+                        <input class="form-control" @bind="newModel" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Part Name</label>
+                        <input class="form-control" @bind="newPartName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Unit Price</label>
+                        <input type="number" step="0.01" class="form-control" @bind="newUnitPrice" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Quantity</label>
+                        <input type="number" class="form-control" @bind="newInventoryQuantity" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" @onclick="ClearInventoryNewVariable">Close</button>
+                <button class="btn btn-primary" @onclick="UpdateInventory">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private MySqlConnectionStringBuilder builder;
+    private MySqlConnection connection;
+    private List<Inventory> inventories;
+    private Inventory existingInventory;
+    private string? newPartId;
+    private string? newBrand;
+    private string? newModel;
+    private string? newPartName;
+    private double newUnitPrice;
+    private int newInventoryQuantity;
 
+    private string modalError = string.Empty;
+    private string successMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        inventories = new List<Inventory>();
+        builder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Database = "cprg211project",
+                UserID = "root",
+                Password = "1234",
+            };
+        connection = new MySqlConnection(builder.ConnectionString);
+        LoadInventory();
+    }
+
+    private void LoadInventory()
+    {
+        inventories.Clear();
+        connection.Open();
+        string sql = "SELECT * FROM inventory";
+        MySqlCommand command = new MySqlCommand(sql, connection);
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var inv = new Inventory(
+                    Convert.ToString(reader["part_id"]),
+                    Convert.ToString(reader["brand"]),
+                    Convert.ToString(reader["model"]),
+                    Convert.ToString(reader["part_name"]),
+                    Convert.ToDouble(reader["unit_price"]),
+                    Convert.ToInt32(reader["inventory_quantity"])
+                );
+                inventories.Add(inv);
+            }
+        }
+        connection.Close();
+    }
+
+    private void AddInventory()
+    {
+        modalError = string.Empty;
+        successMessage = string.Empty;
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(newPartId) ||
+                string.IsNullOrWhiteSpace(newBrand) ||
+                string.IsNullOrWhiteSpace(newModel) ||
+                string.IsNullOrWhiteSpace(newPartName))
+                throw new ArgumentException("All fields are required.");
+
+            if (!Regex.IsMatch(newPartId ?? string.Empty, "^P-\\d{8}$"))
+                throw new FormatException("Part ID must be in format P-########.");
+
+            var newInv = new Inventory(newPartId, newBrand, newModel, newPartName, newUnitPrice, newInventoryQuantity);
+            inventories.Add(newInv);
+
+            connection.Open();
+            string sql = $"INSERT INTO inventory (part_id, brand, model, part_name, unit_price, inventory_quantity) VALUES ('{newInv.PartId}','{newInv.Brand}','{newInv.Model}','{newInv.PartName}',{newInv.UnitPrice}, {newInv.InventoryQuantity})";
+            new MySqlCommand(sql, connection).ExecuteNonQuery();
+            connection.Close();
+
+            ClearInventoryNewVariable();
+            successMessage = "New equipment added successfully!";
+            JS.InvokeVoidAsync("hideModal", "addInventoryModal");
+        }
+        catch (Exception ex)
+        {
+            modalError = ex.Message;
+        }
+    }
+
+    private void ShowInventory(Inventory myInventory)
+    {
+        existingInventory = new Inventory(
+            myInventory.PartId,
+            myInventory.Brand,
+            myInventory.Model,
+            myInventory.PartName,
+            myInventory.UnitPrice,
+            myInventory.InventoryQuantity
+        );
+        newPartId = myInventory.PartId;
+        newBrand = myInventory.Brand;
+        newModel = myInventory.Model;
+        newPartName = myInventory.PartName;
+        newUnitPrice = myInventory.UnitPrice;
+        newInventoryQuantity = myInventory.InventoryQuantity;
+        modalError = string.Empty;
+        successMessage = string.Empty;
+    }
+
+    private void UpdateInventory()
+    {
+        modalError = string.Empty;
+        successMessage = string.Empty;
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(newBrand) ||
+                string.IsNullOrWhiteSpace(newModel) ||
+                string.IsNullOrWhiteSpace(newPartName))
+                throw new ArgumentException("All fields are required.");
+
+            connection.Open();
+            string sql = $"UPDATE inventory SET brand = '{newBrand}', model = '{newModel}', part_name = '{newPartName}', unit_price = {newUnitPrice}, inventory_quantity = {newInventoryQuantity} WHERE part_id = '{existingInventory.PartId}'";
+            new MySqlCommand(sql, connection).ExecuteNonQuery();
+            connection.Close();
+
+            var idx = inventories.FindIndex(i => i.PartId == existingInventory.PartId);
+
+            if (idx >= 0)
+            {
+                inventories[idx].Brand = newBrand;
+                inventories[idx].Model = newModel;
+                inventories[idx].PartName = newPartName;
+                inventories[idx].UnitPrice = newUnitPrice;
+                inventories[idx].InventoryQuantity = newInventoryQuantity;
+            }
+
+            ClearInventoryNewVariable();
+            successMessage = "Equipment updated successfully!";
+            JS.InvokeVoidAsync("hideModal", "updateInventoryModal");
+        }
+        catch (Exception ex)
+        {
+            modalError = ex.Message;
+        }
+    }
+
+    private void DeleteInventory(Inventory myInventory)
+    {
+        inventories.Remove(myInventory);
+        connection.Open();
+        string sql = $"DELETE FROM inventory WHERE part_id = '{myInventory.PartId}'";
+        new MySqlCommand(sql, connection).ExecuteNonQuery();
+        connection.Close();
+    }
+
+    private void ClearInventoryNewVariable()
+    {
+        newPartId = string.Empty;
+        newBrand = string.Empty;
+        newModel = string.Empty;
+        newPartName = string.Empty;
+        newUnitPrice = 0;
+        newInventoryQuantity = 0;
+        modalError = string.Empty;
+        successMessage = string.Empty;
+    }
 }
