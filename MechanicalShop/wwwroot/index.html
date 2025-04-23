@@ -31,3 +31,14 @@
 </body>
 
 </html>
+
+<script>
+    window.hideModal = function (modalId)
+    {
+        var modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
+        if (modal)
+        {
+            modal.hide();
+        }
+    };
+</script>
