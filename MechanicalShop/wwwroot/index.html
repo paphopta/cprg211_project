@@ -33,13 +33,6 @@
 </html>
 
 <script>
-    window.showModal = function (modalId)
-    {
-        var modalElement = document.getElementById(modalId);
-        var modal = new bootstrap.Modal(modalElement);
-        modal.show();
-    };
-
     window.hideModal = function (modalId)
     {
         var modal = bootstrap.Modal.getInstance(document.getElementById(modalId));
