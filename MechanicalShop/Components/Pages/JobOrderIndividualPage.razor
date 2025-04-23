@@ -299,6 +299,7 @@
         newItemQuantity = 0;
         newItemUnitPrice = inventories.Find(x => x.PartId.Contains(newItemId)).UnitPrice;
         newItemUnitTotal = 0;
+        CalculateQuantityPrice();
     }
 
     private void LoadCustomer()
@@ -454,9 +455,13 @@
             {
                 throw new Exception("The quantity must be at least 1.");
             }
-            if (newJobOrderItemList.FindIndex(x => x.PartId == newItemId) != -1 )
+            if (newJobOrderItemList.FindIndex(x => x.PartId == newItemId) != -1)
             {
                 throw new Exception("The item has been already in the list.");
+            }
+            if (newItemQuantity > inventories.Find(x => x.PartId.Contains(newItemId)).InventoryQuantity)
+            {
+                throw new Exception("The quantity is greater than the number of selected item in the inventory.");
             }
 
             JobOrderItem newJobOrderItem = new JobOrderItem(newItemId, newItemQuantity);
