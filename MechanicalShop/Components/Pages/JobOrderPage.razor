@@ -6,6 +6,11 @@
 
 <h3>Job Orders</h3>
 
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">@errorMessage</div>
+}
+
 <div class="d-grid gap-2 col-6 mx-auto my-3">
     <button type="button" class="btn btn-primary" @onclick="()=> GoToIndividualPage(new JobOrder())">Add New Order</button>
 </div>
@@ -45,6 +50,7 @@
     private string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
     private MySqlConnectionStringBuilder builder;
     private MySqlConnection connection;
+    private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,6 +66,7 @@
         connection = new MySqlConnection(builder.ConnectionString);
         LoadJobOrder();
         LoadInventory();
+        errorMessage = "";
     }
 
     private void LoadJobOrder()
@@ -173,6 +180,36 @@
 
     void GoToIndividualPage(JobOrder myJobOrder)
     {
-        Navigation.NavigateTo($"/joborderindividualpage?updateOrderId={myJobOrder.OrderId}");
+        int numCustomer = 0;
+        int numInventory = 0;
+
+        string sql;
+        MySqlCommand command;
+
+        connection.Open();
+
+        sql = "SELECT COUNT(*) FROM customer";
+        command = new MySqlCommand(sql, connection);
+        numCustomer = Convert.ToInt32(command.ExecuteScalar());
+
+        sql = "SELECT COUNT(*) FROM inventory";
+        command = new MySqlCommand(sql, connection);
+        numInventory = Convert.ToInt32(command.ExecuteScalar());
+
+        connection.Close();
+
+        try
+        {
+            if (numCustomer == 0 || numInventory == 0)
+            {
+                throw new Exception("There must be at least one customer and one part in the system.");
+            }
+            errorMessage = "";
+            Navigation.NavigateTo($"/joborderindividualpage?updateOrderId={myJobOrder.OrderId}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
     }
 }

@@ -1,9 +1,25 @@
 ﻿@page "/joborderindividualpage"
 @using MechanicalShop.Data
 @using MySqlConnector
+@using System.Text.RegularExpressions
 @inject NavigationManager Navigation
 
 <h3>Job Order Detail</h3>
+
+@if (!string.IsNullOrEmpty(calculationErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">@calculationErrorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(addItemErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">@addItemErrorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(addUpdateJobErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">@addUpdateJobErrorMessage</div>
+}
 
 <div class="mb-3">
     <div class="row">
@@ -101,7 +117,7 @@
             <td>@newItemBrand</td>
             <td>@newItemModel</td>
             <td>@newItemPartName</td>
-            <td class="text-end col-1"><input class="form-control text-end" placeholder="Quantity" @bind="NewItemQuantityString"></td>
+            <td class="text-end col-1"><input class="form-control text-end" type="number" step="1" placeholder="Quantity" @bind="NewItemQuantityString"></td>
             <td class="text-end">@newItemUnitPrice.ToString("N2")</td>
             <td class="text-end">@newItemUnitTotal.ToString("N2")</td>
             <td class="text-center"><button type="button" class="btn btn-primary btn-sm" @onclick="AddItem">Add</button></td>
@@ -112,7 +128,7 @@
     <div class="row">
         <div class="col">
             <label class="form-label">Service Charge</label>
-            <input class="form-control" placeholder="Service Charge" @bind="NewServiceChargeString">
+            <input class="form-control" type="number" step="0.01" placeholder="Service Charge" @bind="NewServiceChargeString">
         </div>
         <div class="col">
             <label class="form-label">Total Price</label>
@@ -144,6 +160,9 @@
     private List<JobOrder> jobOrders;
 
     private string[] jobStatus = { "New", "In Progress", "Pending", "Cancelled", "Completed" };
+    private string? calculationErrorMessage;
+    private string? addItemErrorMessage;
+    private string? addUpdateJobErrorMessage;
 
     enum OperationType
     {
@@ -212,6 +231,9 @@
         LoadCustomer();
         LoadInventory();
         LoadJobOrder();
+        calculationErrorMessage = "";
+        addItemErrorMessage = "";
+        addUpdateJobErrorMessage = "";
 
         if (updateOrderId == "")
         {
@@ -254,6 +276,7 @@
             }
             getCustomerName();
         }
+        newItemQuantityString = "0";
         newItemId = inventories[0].PartId;
         getItemInformation();
         newServiceChargeString = newServiceCharge.ToString("N2");
@@ -377,24 +400,75 @@
 
     private void CalculateTotalPrice()
     {
-        newServiceCharge = Convert.ToDouble(newServiceChargeString);
-        newTotalPrice = newServiceCharge + newJobOrderItemList.Sum(x => x.Total);
-        newTotalPriceString = newTotalPrice.ToString("N2");
+        try
+        {
+            newServiceCharge = Convert.ToDouble(newServiceChargeString);
+            newTotalPrice = newServiceCharge + newJobOrderItemList.Sum(x => x.Total);
+            newTotalPriceString = newTotalPrice.ToString("N2");
+            if (newServiceCharge < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            calculationErrorMessage = "";
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            calculationErrorMessage = "Service charge must not be negative.";
+        }
+        catch (Exception ex)
+        {
+            calculationErrorMessage = "Service charge must be number or decimal.";
+        }
     }
-
     private void CalculateQuantityPrice()
     {
-        newItemQuantity = Convert.ToInt32(newItemQuantityString);
-        newItemUnitTotal = newItemQuantity * newItemUnitPrice;
-        CalculateTotalPrice();
+        try
+        {
+            newItemQuantity = Convert.ToInt32(newItemQuantityString);
+            newItemUnitTotal = newItemQuantity * newItemUnitPrice;
+            if (newItemQuantity < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            CalculateTotalPrice();
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            calculationErrorMessage = "Quantity must not be negative.";
+        }
+        catch (Exception ex)
+        {
+            calculationErrorMessage = "Quantity must be number.";
+        }
     }
 
     private void AddItem()
     {
-        JobOrderItem newJobOrderItem = new JobOrderItem(newItemId, newItemQuantity);
-        newJobOrderItem.CalculateTotal(inventories.Find(x => x.PartId.Contains(newItemId)).UnitPrice);
-        newJobOrderItemList.Add(newJobOrderItem);
-        CalculateTotalPrice();
+        try
+        {
+            if (calculationErrorMessage != "")
+            {
+                throw new Exception("Please fix the error before add an items.");
+            }
+            if (newItemQuantity < 1)
+            {
+                throw new Exception("The quantity must be at least 1.");
+            }
+            if (newJobOrderItemList.FindIndex(x => x.PartId == newItemId) != -1 )
+            {
+                throw new Exception("The item has been already in the list.");
+            }
+
+            JobOrderItem newJobOrderItem = new JobOrderItem(newItemId, newItemQuantity);
+            newJobOrderItem.CalculateTotal(inventories.Find(x => x.PartId.Contains(newItemId)).UnitPrice);
+            newJobOrderItemList.Add(newJobOrderItem);
+            CalculateTotalPrice();
+            addItemErrorMessage = "";
+        }
+        catch (Exception ex)
+        {
+            addItemErrorMessage = ex.Message;
+        }
     }
 
     private void DeleteItem(JobOrderItem myJobOrderItem)
@@ -407,68 +481,97 @@
     {
         string sql;
         MySqlCommand command;
-        CalculateTotalPrice();
 
-        newOrderDate = Convert.ToDateTime(newOrderDateString);
-
-        if (operationType == OperationType.Add)
+        try
         {
-            JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
-
-            connection.Open();
-            sql = $"INSERT INTO job_order (order_id, customer_id, order_date, work_description, service_charge, total_price, status) VALUES ('{newJobOrder.OrderId}','{newJobOrder.CustomerId}','{newJobOrder.OrderDate}','{newJobOrder.WorkDescription}',{newJobOrder.ServiceCharge}, {newJobOrder.TotalPrice}, {newJobOrder.Status})";
-            command = new MySqlCommand(sql, connection);
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
-        else
-        {
-            JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
-
-            connection.Open();
-            sql = $"UPDATE job_order SET customer_id = '{newJobOrder.CustomerId}', order_date = '{newJobOrder.OrderDate}', work_description = '{newJobOrder.WorkDescription}', service_charge = {newJobOrder.ServiceCharge}, total_price = {newJobOrder.TotalPrice}, status = {newJobOrder.Status} WHERE order_id = '{newJobOrder.OrderId}'";
-            command = new MySqlCommand(sql, connection);
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
-
-        connection.Open();
-        sql = $"DELETE FROM job_order_inventory WHERE order_id = '{newJobOrderId}'";
-        command = new MySqlCommand(sql, connection);
-        command.ExecuteNonQuery();
-
-        foreach (JobOrderItem items in newJobOrderItemList)
-        {
-            sql = $"INSERT INTO job_order_inventory (order_id, part_id, order_quantity) VALUES ('{newJobOrderId}','{items.PartId}',{items.OrderQuantity})";
-            command = new MySqlCommand(sql, connection);
-            command.ExecuteNonQuery();
-        }
-        connection.Close();
-
-        int index = 0;
-        int jobOrderIndex = jobOrders.FindIndex(x => x.OrderId == newJobOrderId);
-        foreach (Inventory myInventory in inventories)
-        {
-            if (jobOrderIndex > -1)
+            if (calculationErrorMessage != "" || addItemErrorMessage != "")
             {
-                index = jobOrders[jobOrderIndex].JobOrderItems.FindIndex(x => x.PartId == myInventory.PartId);
+                throw new Exception("Please fix the error before add a new job order.");
+            }
+            if (!Regex.IsMatch(newJobOrderId, "^O-\\d{8}$"))
+            {
+                throw new Exception("Job order ID must be in format of O-########.");
+            }
+            if (!Regex.IsMatch(newOrderDateString, "^\\d{4}-\\d{2}-\\d{2}$"))
+            {
+                throw new Exception("Date must be in format of YYYY-MM-DD.");
+            }
+            if (newWorkDescription == "")
+            {
+                throw new Exception("Please fill work description.");
+            }
+            if (newJobOrderItemList.Count() == 0)
+            {
+                throw new Exception("Please add items in the job order.");
+            }
+
+            CalculateTotalPrice();
+
+            newOrderDate = Convert.ToDateTime(newOrderDateString);
+
+            if (operationType == OperationType.Add)
+            {
+                JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
+
+                connection.Open();
+                sql = $"INSERT INTO job_order (order_id, customer_id, order_date, work_description, service_charge, total_price, status) VALUES ('{newJobOrder.OrderId}','{newJobOrder.CustomerId}','{newJobOrder.OrderDate}','{newJobOrder.WorkDescription}',{newJobOrder.ServiceCharge}, {newJobOrder.TotalPrice}, {newJobOrder.Status})";
+                command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            else
+            {
+                JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
+
+                connection.Open();
+                sql = $"UPDATE job_order SET customer_id = '{newJobOrder.CustomerId}', order_date = '{newJobOrder.OrderDate}', work_description = '{newJobOrder.WorkDescription}', service_charge = {newJobOrder.ServiceCharge}, total_price = {newJobOrder.TotalPrice}, status = {newJobOrder.Status} WHERE order_id = '{newJobOrder.OrderId}'";
+                command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            connection.Open();
+            sql = $"DELETE FROM job_order_inventory WHERE order_id = '{newJobOrderId}'";
+            command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+
+            foreach (JobOrderItem items in newJobOrderItemList)
+            {
+                sql = $"INSERT INTO job_order_inventory (order_id, part_id, order_quantity) VALUES ('{newJobOrderId}','{items.PartId}',{items.OrderQuantity})";
+                command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+            }
+            connection.Close();
+
+            int index = 0;
+            int jobOrderIndex = jobOrders.FindIndex(x => x.OrderId == newJobOrderId);
+            foreach (Inventory myInventory in inventories)
+            {
+                if (jobOrderIndex > -1)
+                {
+                    index = jobOrders[jobOrderIndex].JobOrderItems.FindIndex(x => x.PartId == myInventory.PartId);
+                    if (index > -1)
+                    {
+                        myInventory.InventoryQuantity += jobOrders[jobOrderIndex].JobOrderItems[index].OrderQuantity;
+                    }
+                }
+                index = newJobOrderItemList.FindIndex(x => x.PartId == myInventory.PartId);
                 if (index > -1)
                 {
-                    myInventory.InventoryQuantity += jobOrders[jobOrderIndex].JobOrderItems[index].OrderQuantity;
+                    myInventory.InventoryQuantity -= newJobOrderItemList[index].OrderQuantity;
                 }
+                connection.Open();
+                sql = $"UPDATE inventory SET inventory_quantity = {myInventory.InventoryQuantity} WHERE part_id = '{myInventory.PartId}'";
+                command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
             }
-            index = newJobOrderItemList.FindIndex(x => x.PartId == myInventory.PartId);
-            if (index > -1)
-            {
-                myInventory.InventoryQuantity -= newJobOrderItemList[index].OrderQuantity;
-            }
-            connection.Open();
-            sql = $"UPDATE inventory SET inventory_quantity = {myInventory.InventoryQuantity} WHERE part_id = '{myInventory.PartId}'";
-            command = new MySqlCommand(sql, connection);
-            command.ExecuteNonQuery();
-            connection.Close();
+            Navigation.NavigateTo("/joborderpage");
         }
-        Navigation.NavigateTo("/joborderpage");
+        catch (Exception ex)
+        {
+            addUpdateJobErrorMessage = ex.Message;
+        }
     }
 
     private void CancelAddUpdate()
