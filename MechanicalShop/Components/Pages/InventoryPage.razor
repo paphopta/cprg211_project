@@ -4,6 +4,16 @@
 @using MySqlConnector
 @inject IJSRuntime JS
 
+<script>
+    window.hideModal = function(modalId) {
+        const el = document.getElementById(modalId);
+        if (el) {
+            const modal = bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+            modal.hide();
+        }
+    };
+</script>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 <div class="container mt-4">
@@ -286,6 +296,17 @@
             string sql = $"UPDATE inventory SET brand = '{newBrand}', model = '{newModel}', part_name = '{newPartName}', unit_price = {newUnitPrice}, inventory_quantity = {newInventoryQuantity} WHERE part_id = '{existingInventory.PartId}'";
             new MySqlCommand(sql, connection).ExecuteNonQuery();
             connection.Close();
+
+            var idx = inventories.FindIndex(i => i.PartId == existingInventory.PartId);
+
+            if (idx >= 0)
+            {
+                inventories[idx].Brand = newBrand;
+                inventories[idx].Model = newModel;
+                inventories[idx].PartName = newPartName;
+                inventories[idx].UnitPrice = newUnitPrice;
+                inventories[idx].InventoryQuantity = newInventoryQuantity;
+            }
 
             ClearInventoryNewVariable();
             successMessage = "Equipment updated successfully!";

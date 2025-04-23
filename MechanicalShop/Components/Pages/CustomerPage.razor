@@ -287,6 +287,15 @@
             new MySqlCommand(sql, connection).ExecuteNonQuery();
             connection.Close();
 
+            var idx = customers.FindIndex(c => c.CustomerId == existingCustomer.CustomerId);
+            if (idx >= 0)
+            {
+                customers[idx].FirstName = newFirstName;
+                customers[idx].LastName = newLastName;
+                customers[idx].Phone = newPhone;
+                customers[idx].Email = newEmail;
+            }
+
             ClearCustomerNewVariable();
             JS.InvokeVoidAsync("hideModal", "updateCustomerModal");
             successMessage = "Customer updated successfully!";
