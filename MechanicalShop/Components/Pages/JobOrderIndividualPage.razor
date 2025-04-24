@@ -248,7 +248,9 @@
             newWorkDescription = "";
             newJobOrderItemList = new List<JobOrderItem>();
             newServiceCharge = 0;
+            newServiceChargeString = newServiceCharge.ToString("N2");
             newTotalPrice = 0;
+            newTotalPriceString = newTotalPrice.ToString("N2");
         }
         else
         {
@@ -270,7 +272,9 @@
                         newJobOrderItemList.Add(new JobOrderItem(myJobOrderItems.PartId, myJobOrderItems.OrderQuantity, myJobOrderItems.Total));
                     }
                     newServiceCharge = myJobOrder.ServiceCharge;
+                    newServiceChargeString = newServiceCharge.ToString("F2");
                     newTotalPrice = myJobOrder.TotalPrice;
+                    newTotalPriceString = newTotalPrice.ToString("N2");
                     break;
                 }
             }
@@ -279,8 +283,6 @@
         newItemQuantityString = "0";
         newItemId = inventories[0].PartId;
         getItemInformation();
-        newServiceChargeString = newServiceCharge.ToString("N2");
-        newTotalPriceString = newTotalPrice.ToString("N2");
         newOrderDateString = newOrderDate.ToString("yyyy-MM-dd");
         CalculateTotalPrice();
     }
@@ -449,7 +451,7 @@
         {
             if (calculationErrorMessage != "")
             {
-                throw new Exception("Please fix the error before add an items.");
+                throw new Exception("Please fix the error before add an item.");
             }
             if (newItemQuantity < 1)
             {
@@ -469,6 +471,7 @@
             newJobOrderItemList.Add(newJobOrderItem);
             CalculateTotalPrice();
             addItemErrorMessage = "";
+            addUpdateJobErrorMessage = "";
         }
         catch (Exception ex)
         {
