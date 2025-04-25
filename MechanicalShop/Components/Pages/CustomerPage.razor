@@ -182,6 +182,12 @@
     private MySqlConnectionStringBuilder builder;
     private MySqlConnection connection;
 
+    /* 
+     * Name: OnInitializedAsync
+     * Input: -
+     * Output: -
+     * Description: Initialize variables and load data from database when the page is loaded.
+    */
     protected override async Task OnInitializedAsync()
     {
         builder = new MySqlConnectionStringBuilder
@@ -194,7 +200,12 @@
         connection = new MySqlConnection(builder.ConnectionString);
         LoadCustomer();
     }
-
+    /* 
+     * Name: LoadCustomer
+     * Input: -
+     * Output: -
+     * Description: Retrieve customer information from the database.
+    */
     private void LoadCustomer()
     {
         customers.Clear();
@@ -215,6 +226,12 @@
         connection.Close();
     }
 
+    /* 
+     * Name: AddCustomer
+     * Input: -
+     * Output: -
+     * Description: Add a new customer to the customer database.
+    */
     private void AddCustomer()
     {
         modalError = string.Empty;
@@ -252,6 +269,12 @@
         }
     }
 
+    /* 
+     * Name: ShowCustomer
+     * Input: -
+     * Output: -
+     * Description: Display customer information in a specific format.
+    */
     private void ShowCustomer(Customer cust)
     {
         existingCustomer = cust;
@@ -264,6 +287,12 @@
         successMessage = string.Empty;
     }
 
+    /* 
+     * Name: UpdateCustomer
+     * Input: -
+     * Output: -
+     * Description: Update or adjust information for an existing customer. After updating, the adjustment will be saved in the database.
+    */
     private void UpdateCustomer()
     {
         modalError = string.Empty;
@@ -306,6 +335,12 @@
         }
     }
 
+    /* 
+     * Name: DeleteCustomer
+     * Input: -
+     * Output: -
+     * Description: Delete an existing customer information from the database.
+    */
     private void DeleteCustomer(Customer cust)
     {
         customers.Remove(cust);
@@ -315,6 +350,12 @@
         connection.Close();
     }
 
+    /* 
+     * Name: ClearCustomerNewVariable
+     * Input: -
+     * Output: -
+     * Description: After a successful add/update, this function is called to ensure the next time the modal opens, the user is starting from a clean slate.
+    */
     private void ClearCustomerNewVariable()
     {
         newCustomerId = string.Empty;

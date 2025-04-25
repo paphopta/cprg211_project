@@ -188,6 +188,12 @@
     private string modalError = string.Empty;
     private string successMessage = string.Empty;
 
+    /* 
+     * Name: OnInitializedAsync
+     * Input: -
+     * Output: -
+     * Description: Initialize variables and load data from database when the page is loaded.
+    */
     protected override async Task OnInitializedAsync()
     {
         inventories = new List<Inventory>();
@@ -202,6 +208,12 @@
         LoadInventory();
     }
 
+    /* 
+     * Name: LoadInventory
+     * Input: -
+     * Output: -
+     * Description: Retrieving the inventory information from the database.
+    */
     private void LoadInventory()
     {
         inventories.Clear();
@@ -226,6 +238,12 @@
         connection.Close();
     }
 
+    /* 
+     * Name: AddInventory
+     * Input: -
+     * Output: -
+     * Description: Add new equipment to the inventory database.
+    */
     private void AddInventory()
     {
         modalError = string.Empty;
@@ -260,6 +278,12 @@
         }
     }
 
+    /* 
+     * Name: ShowInventory
+     * Input: -
+     * Output: -
+     * Description: Display the information of the equipment in a specific format.
+    */
     private void ShowInventory(Inventory myInventory)
     {
         existingInventory = new Inventory(
@@ -280,6 +304,12 @@
         successMessage = string.Empty;
     }
 
+    /* 
+     * Name: UpdateInventory
+     * Input: -
+     * Output: -
+     * Description: Update or adjust information for an existing equipment. After updating, the adjustment will be saved in the database.
+    */
     private void UpdateInventory()
     {
         modalError = string.Empty;
@@ -318,6 +348,12 @@
         }
     }
 
+    /* 
+     * Name: DeleteInventory
+     * Input: -
+     * Output: -
+     * Description: Remove equipment information from the database.
+    */
     private void DeleteInventory(Inventory myInventory)
     {
         inventories.Remove(myInventory);
@@ -327,6 +363,12 @@
         connection.Close();
     }
 
+    /* 
+     * Name: ClearInventoryNewVariable
+     * Input: -
+     * Output: -
+     * Description: After a successful add/update, this function is called to ensure the next time the modal opens, the user is starting from a clean slate.
+    */
     private void ClearInventoryNewVariable()
     {
         newPartId = string.Empty;
