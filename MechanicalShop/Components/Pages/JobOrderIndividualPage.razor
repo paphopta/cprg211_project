@@ -1,4 +1,12 @@
-﻿@page "/joborderindividualpage"
+﻿@code {
+/* 
+* Name: JobOrderIndividualPage.razor
+* Date: 24/04/2025
+* Description: Job order individual page. Show the details of each job order.
+*/
+}
+
+@page "/joborderindividualpage"
 @using MechanicalShop.Data
 @using MySqlConnector
 @using System.Text.RegularExpressions
@@ -214,6 +222,12 @@
     private double newItemUnitPrice;
     private double newItemUnitTotal;
 
+    /* 
+     * Name: OnInitializedAsync
+     * Input: -
+     * Output: -
+     * Description: Initialize variables and load data from database when the page is loaded.
+    */
     protected override async Task OnInitializedAsync()
     {
         customers = new List<Customer>();
@@ -235,6 +249,7 @@
         addItemErrorMessage = "";
         addUpdateJobErrorMessage = "";
 
+        /* New job order */
         if (updateOrderId == "")
         {
             buttonName = "Add New Order";
@@ -252,6 +267,7 @@
             newTotalPrice = 0;
             newTotalPriceString = newTotalPrice.ToString("N2");
         }
+        /* Update job order */
         else
         {
             buttonName = "Update Order";
@@ -287,12 +303,24 @@
         CalculateTotalPrice();
     }
 
+    /* 
+     * Name: getCustomerName
+     * Input: -
+     * Output: -
+     * Description: Get customer first name and last name from customer ID.
+    */
     private void getCustomerName()
     {
         newFirstName = customers.Find(x => x.CustomerId.Contains(newCustomerId)).FirstName;
         newLastName = customers.Find(x => x.CustomerId.Contains(newCustomerId)).LastName;
     }
 
+    /* 
+     * Name: getItemInformation
+     * Input: -
+     * Output: -
+     * Description: Get part information from customer ID.
+    */
     private void getItemInformation()
     {
         newItemBrand = inventories.Find(x => x.PartId.Contains(newItemId)).Brand;
@@ -304,6 +332,12 @@
         CalculateQuantityPrice();
     }
 
+    /* 
+     * Name: LoadCustomer
+     * Input: -
+     * Output: -
+     * Description: Read the customer from database to list.
+    */
     private void LoadCustomer()
     {
         connection.Open();
@@ -325,7 +359,13 @@
         }
         connection.Close();
     }
-
+    
+    /* 
+     * Name: LoadInventory
+     * Input: -
+     * Output: -
+     * Description: Read the part information from database to list.
+    */
     private void LoadInventory()
     {
         connection.Open();
@@ -348,7 +388,13 @@
         }
         connection.Close();
     }
-
+    
+    /* 
+     * Name: LoadJobOrder
+     * Input: -
+     * Output: -
+     * Description: Read the job order information from database to list.
+    */
     private void LoadJobOrder()
     {
         connection.Open();
@@ -370,6 +416,7 @@
                 jobOrders.Add(newJobOrder);
             }
         }
+        /* Read items in the job order. */
         foreach (JobOrder myJobOrder in jobOrders)
         {
             sql = $"SELECT * FROM customer WHERE customer_id = '{myJobOrder.CustomerId}'";
@@ -400,7 +447,13 @@
         }
         connection.Close();
     }
-
+    
+    /* 
+     * Name: CalculateTotalPrice
+     * Input: -
+     * Output: -
+     * Description: Calculate the total price including input error check.
+    */
     private void CalculateTotalPrice()
     {
         try
@@ -423,6 +476,13 @@
             calculationErrorMessage = "Service charge must be number or decimal.";
         }
     }
+    
+    /* 
+     * Name: CalculateQuantityPrice
+     * Input: -
+     * Output: -
+     * Description: Calculate the price of each part multiply by quantity including input error check.
+    */
     private void CalculateQuantityPrice()
     {
         try
@@ -444,7 +504,13 @@
             calculationErrorMessage = "Quantity must be number.";
         }
     }
-
+    
+    /* 
+     * Name: AddItem
+     * Input: -
+     * Output: -
+     * Description: Add item to the job order including input error check.
+    */
     private void AddItem()
     {
         try
@@ -478,13 +544,25 @@
             addItemErrorMessage = ex.Message;
         }
     }
-
+    
+    /* 
+     * Name: DeleteItem
+     * Input: -
+     * Output: -
+     * Description: Delete item from the job order including input error check.
+    */
     private void DeleteItem(JobOrderItem myJobOrderItem)
     {
         newJobOrderItemList.Remove(newJobOrderItemList.Find(x => x.PartId.Contains(myJobOrderItem.PartId)));
         CalculateTotalPrice();
     }
-
+    
+    /* 
+     * Name: AddUpdateJobOrder
+     * Input: -
+     * Output: -
+     * Description: Check input error and add or update the job order to database.
+    */
     private void AddUpdateJobOrder()
     {
         string sql;
@@ -517,6 +595,7 @@
 
             newOrderDate = Convert.ToDateTime(newOrderDateString);
 
+            /* Add new job order. */
             if (operationType == OperationType.Add)
             {
                 JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
@@ -527,6 +606,7 @@
                 command.ExecuteNonQuery();
                 connection.Close();
             }
+            /* Updating existing job order. */
             else
             {
                 JobOrder newJobOrder = new JobOrder(newJobOrderId, newCustomerId, newOrderDate, newWorkDescription, newServiceCharge, newTotalPrice, newStatus, "", "");
@@ -538,6 +618,7 @@
                 connection.Close();
             }
 
+            /* Update parts in job order to database. */
             connection.Open();
             sql = $"DELETE FROM job_order_inventory WHERE order_id = '{newJobOrderId}'";
             command = new MySqlCommand(sql, connection);
@@ -551,6 +632,7 @@
             }
             connection.Close();
 
+            /* Update inventory after the job order is added or updated. */
             int index = 0;
             int jobOrderIndex = jobOrders.FindIndex(x => x.OrderId == newJobOrderId);
             foreach (Inventory myInventory in inventories)
@@ -582,6 +664,12 @@
         }
     }
 
+    /* 
+     * Name: CancelAddUpdate
+     * Input: -
+     * Output: -
+     * Description: Return to job order page.
+    */
     private void CancelAddUpdate()
     {
         Navigation.NavigateTo("/joborderpage");

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+* Name: JobOrder.cs
+* Date: 24/04/2025
+* Description: JobOrder class
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
