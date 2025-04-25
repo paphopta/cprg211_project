@@ -1,4 +1,12 @@
-﻿@page "/joborderpage"
+﻿@code {
+/* 
+* Name: JobOrderPage.razor
+* Date: 24/04/2025
+* Description: Job order page. List all job orders in the system.
+*/
+}
+
+@page "/joborderpage"
 @using MechanicalShop.Data
 @using MySqlConnector
 @inject NavigationManager Navigation
@@ -52,6 +60,12 @@
     private MySqlConnection connection;
     private string? errorMessage;
 
+    /* 
+     * Name: OnInitializedAsync
+     * Input: -
+     * Output: -
+     * Description: Initialize variables and load data from database when the page is loaded.
+    */
     protected override async Task OnInitializedAsync()
     {
         jobOrders = new List<JobOrder>();
@@ -68,7 +82,13 @@
         LoadInventory();
         errorMessage = "";
     }
-
+    
+    /* 
+     * Name: LoadJobOrder
+     * Input: -
+     * Output: -
+     * Description: Read job order from data base.
+    */
     private void LoadJobOrder()
     {
         connection.Open();
@@ -90,6 +110,7 @@
                 jobOrders.Add(newJobOrder);
             }
         }
+        /* Read parts in each job order from database */
         foreach (JobOrder myJobOrder in jobOrders)
         {
             sql = $"SELECT * FROM customer WHERE customer_id = '{myJobOrder.CustomerId}'";
@@ -118,7 +139,13 @@
         }
         connection.Close();
     }
-
+    
+    /* 
+     * Name: LoadInventory
+     * Input: -
+     * Output: -
+     * Description: Read part information for showing in the page.
+    */
     private void LoadInventory()
     {
         connection.Open();
@@ -142,11 +169,18 @@
         connection.Close();
     }
 
+    /* 
+     * Name: DeleteJobOrder
+     * Input: myJobOrder   Job order object to be deleted
+     * Output: -
+     * Description: Delete job order from the system and database
+    */
     private void DeleteJobOrder(JobOrder myJobOrder)
     {
         string sql;
         MySqlCommand command;
 
+        /* Update number of parts in the database. */
         foreach (Inventory myInventory in inventories)
         {
             int index = myJobOrder.JobOrderItems.FindIndex(x => x.PartId == myInventory.PartId);
@@ -178,6 +212,12 @@
         connection.Close();
     }
 
+    /* 
+     * Name: GoToIndividualPage
+     * Input: myJobOrder   Job order object to be viewed or updated
+     * Output: -
+     * Description: Move to job order detail page.
+    */
     void GoToIndividualPage(JobOrder myJobOrder)
     {
         int numCustomer = 0;

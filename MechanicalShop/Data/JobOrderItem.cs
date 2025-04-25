@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+* Name: JobOrderItem.cs
+* Date: 24/04/2025
+* Description: JobOrderItem class
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
